@@ -1,31 +1,694 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MindSprint</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>MindSprint - Learn Play Remember</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  background:#0b1020;
+  color:#fff;
+  min-height:100vh;
+}
+
+.app{
+  width:100%;
+  max-width:700px;
+  margin:auto;
+  padding:20px;
+}
+
+header{
+  text-align:center;
+  padding:20px 10px;
+}
+
+.logo{
+  font-size:42px;
+}
+
+h1{
+  font-size:34px;
+  margin:8px 0;
+}
+
+.subtitle{
+  color:#aab4d0;
+  font-size:16px;
+}
+
+.card{
+  background:#151d33;
+  border:1px solid #293452;
+  border-radius:20px;
+  padding:20px;
+  margin:15px 0;
+}
+
+.section-title{
+  font-size:22px;
+  margin-bottom:15px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+button{
+  border:0;
+  border-radius:14px;
+  padding:16px 12px;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+  background:#263452;
+  color:white;
+}
+
+button:active{
+  transform:scale(.97);
+}
+
+.main-btn{
+  width:100%;
+  margin-top:10px;
+}
+
+.levels button{
+  background:#202b46;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin:15px 0;
+}
+
+.stat{
+  background:#11182b;
+  border-radius:14px;
+  padding:12px;
+  text-align:center;
+}
+
+.stat strong{
+  display:block;
+  font-size:22px;
+  margin-top:4px;
+}
+
+.game{
+  text-align:center;
+}
+
+.big-number{
+  font-size:48px;
+  letter-spacing:5px;
+  margin:30px 0;
+  min-height:60px;
+}
+
+.memory-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+  margin-top:20px;
+}
+
+.memory-card{
+  aspect-ratio:1;
+  font-size:25px;
+  background:#263452;
+}
+
+.hidden{
+  display:none;
+}
+
+.choice{
+  width:100%;
+  margin:7px 0;
+  background:#263452;
+}
+
+.correct{
+  background:#20734a !important;
+}
+
+.wrong{
+  background:#8a3030 !important;
+}
+
+.back{
+  background:#39445f;
+  margin-bottom:10px;
+}
+
+.message{
+  min-height:25px;
+  margin:15px 0;
+  font-weight:bold;
+}
+
+.progress{
+  height:8px;
+  background:#28324b;
+  border-radius:10px;
+  overflow:hidden;
+  margin:15px 0;
+}
+
+.progress div{
+  height:100%;
+  width:0%;
+  background:#fff;
+  transition:.3s;
+}
+
+footer{
+  text-align:center;
+  color:#7783a3;
+  padding:25px 0;
+  font-size:13px;
+}
+
+@media(max-width:450px){
+  .grid{
+    grid-template-columns:1fr;
+  }
+  h1{
+    font-size:30px;
+  }
+}
+</style>
 </head>
 
 <body>
 
-  <h1>🧠 MindSprint</h1>
+<div class="app">
 
-  <p>Learn • Play • Remember</p>
+<header>
+  <div class="logo">🧠</div>
+  <h1>MindSprint</h1>
+  <p class="subtitle">Learn • Play • Remember</p>
+</header>
 
-  <hr>
+<!-- HOME -->
+<div id="home">
 
-  <h2>Choose Your Training</h2>
+<div class="card">
+  <div class="section-title">🎮 Choose Your Training</div>
 
-  <button>🧠 Brain Training</button>
-  <br><br>
+  <div class="grid">
+    <button onclick="startGame('memory')">🧠 Memory Match</button>
+    <button onclick="startGame('number')">🔢 Number Memory</button>
+    <button onclick="startGame('reaction')">⚡ Quick Reaction</button>
+    <button onclick="startGame('quiz')">🎯 Brain Quiz</button>
+  </div>
+</div>
 
-  <button>📚 SSC • Railway • Banking</button>
-  <br><br>
+<div class="card">
+  <div class="section-title">📚 Study Zone</div>
 
-  <button>🏛️ UPSC Preparation</button>
-  <br><br>
+  <div class="grid">
+    <button onclick="alert('SSC practice will be added in the next version!')">
+      📚 SSC
+    </button>
 
-  <button>🚀 AI • Technology • Space • Science</button>
+    <button onclick="alert('Railway practice will be added in the next version!')">
+      🚆 Railway
+    </button>
+
+    <button onclick="alert('Banking practice will be added in the next version!')">
+      🏦 Banking
+    </button>
+
+    <button onclick="alert('UPSC practice will be added in the next version!')">
+      🏛️ UPSC
+    </button>
+  </div>
+</div>
+
+<div class="card">
+  <div class="section-title">🚀 Knowledge Zone</div>
+
+  <button class="main-btn"
+  onclick="alert('AI • Technology • Space • Science lessons coming soon!')">
+  🚀 AI • Technology • Space • Science
+  </button>
+</div>
+
+</div>
+
+
+<!-- GAME -->
+<div id="gameScreen" class="hidden">
+
+<button class="back" onclick="goHome()">← Home</button>
+
+<div class="card game">
+
+<h2 id="gameTitle">Game</h2>
+
+<div class="stats">
+  <div class="stat">
+    Score
+    <strong id="score">0</strong>
+  </div>
+
+  <div class="stat">
+    Level
+    <strong id="levelText">Easy</strong>
+  </div>
+
+  <div class="stat">
+    Best
+    <strong id="best">0</strong>
+  </div>
+</div>
+
+<div class="progress">
+  <div id="progressBar"></div>
+</div>
+
+<div id="gameContent"></div>
+
+<div id="message" class="message"></div>
+
+</div>
+
+</div>
+
+<footer>
+  MindSprint • Train Your Brain • Improve Your Focus
+</footer>
+
+</div>
+
+
+<script>
+
+let currentGame="";
+let score=0;
+let level=1;
+let question=0;
+let best=Number(localStorage.getItem("mindsprintBest")||0);
+
+let memoryValues=[];
+let memoryOpened=[];
+let memoryMatched=0;
+
+const levels=["Easy","Medium","Hard","Advanced"];
+
+function startGame(type){
+
+  currentGame=type;
+  score=0;
+  level=1;
+  question=0;
+
+  document.getElementById("home").classList.add("hidden");
+  document.getElementById("gameScreen").classList.remove("hidden");
+
+  updateStats();
+
+  if(type==="memory") memoryGame();
+  if(type==="number") numberGame();
+  if(type==="reaction") reactionGame();
+  if(type==="quiz") quizGame();
+}
+
+function updateStats(){
+
+  document.getElementById("score").textContent=score;
+  document.getElementById("levelText").textContent=levels[level-1];
+  document.getElementById("best").textContent=best;
+
+  document.getElementById("progressBar").style.width=
+    Math.min(question*20,100)+"%";
+}
+
+function addScore(points){
+
+  score+=points;
+
+  if(score>best){
+    best=score;
+    localStorage.setItem("mindsprintBest",best);
+  }
+
+  updateStats();
+}
+
+function goHome(){
+
+  document.getElementById("gameScreen").classList.add("hidden");
+  document.getElementById("home").classList.remove("hidden");
+}
+
+
+/* MEMORY MATCH */
+
+function memoryGame(){
+
+  document.getElementById("gameTitle").textContent="🧠 Memory Match";
+
+  const emojis=["🍎","🚀","⭐","🎯","🧩","🌈","⚡","🎵"];
+
+  memoryValues=[...emojis,...emojis]
+    .sort(()=>Math.random()-.5);
+
+  memoryOpened=[];
+  memoryMatched=0;
+
+  let html='<p>Match all identical cards!</p>';
+  html+='<div class="memory-grid">';
+
+  memoryValues.forEach((x,i)=>{
+    html+=`
+      <button class="memory-card"
+      id="m${i}"
+      onclick="openMemory(${i})">?</button>
+    `;
+  });
+
+  html+='</div>';
+
+  document.getElementById("gameContent").innerHTML=html;
+  document.getElementById("message").textContent="";
+}
+
+function openMemory(i){
+
+  if(memoryOpened.includes(i)) return;
+  if(document.getElementById("m"+i).textContent!=="?") return;
+
+  document.getElementById("m"+i).textContent=memoryValues[i];
+
+  memoryOpened.push(i);
+
+  if(memoryOpened.length===2){
+
+    let a=memoryOpened[0];
+    let b=memoryOpened[1];
+
+    if(memoryValues[a]===memoryValues[b]){
+
+      memoryMatched++;
+      addScore(10);
+
+      memoryOpened=[];
+
+      if(memoryMatched===memoryValues.length/2){
+
+        document.getElementById("message").textContent=
+          "🎉 Excellent! All pairs matched!";
+
+        setTimeout(()=>{
+          level=Math.min(level+1,4);
+          question++;
+          updateStats();
+          memoryGame();
+        },1000);
+      }
+
+    }else{
+
+      setTimeout(()=>{
+
+        document.getElementById("m"+a).textContent="?";
+        document.getElementById("m"+b).textContent="?";
+
+        memoryOpened=[];
+
+      },700);
+    }
+  }
+}
+
+
+/* NUMBER MEMORY */
+
+function numberGame(){
+
+  document.getElementById("gameTitle").textContent="🔢 Number Memory";
+
+  let length=level+3;
+
+  let number="";
+
+  for(let i=0;i<length;i++){
+    number+=Math.floor(Math.random()*10);
+  }
+
+  document.getElementById("gameContent").innerHTML=`
+    <p>Remember this number:</p>
+    <div class="big-number">${number}</div>
+  `;
+
+  document.getElementById("message").textContent=
+    "You have 3 seconds...";
+
+  setTimeout(()=>{
+
+    document.getElementById("gameContent").innerHTML=`
+      <p>What was the number?</p>
+
+      <input id="numberInput"
+      inputmode="numeric"
+      style="width:100%;padding:15px;border-radius:12px;
+      border:0;font-size:20px;margin:15px 0;text-align:center">
+
+      <button class="main-btn" onclick="checkNumber('${number}')">
+        Check Answer
+      </button>
+    `;
+
+    document.getElementById("message").textContent="";
+
+  },3000);
+}
+
+function checkNumber(correct){
+
+  let input=document.getElementById("numberInput").value;
+
+  if(input===correct){
+
+    addScore(20);
+    question++;
+
+    document.getElementById("message").textContent=
+      "✅ Correct!";
+
+    setTimeout(()=>{
+
+      if(question>=3){
+        level=Math.min(level+1,4);
+        question=0;
+      }
+
+      updateStats();
+      numberGame();
+
+    },800);
+
+  }else{
+
+    document.getElementById("message").textContent=
+      "❌ Not quite. The correct number was "+correct;
+
+    setTimeout(numberGame,1200);
+  }
+}
+
+
+/* REACTION */
+
+let reactionTimer;
+let reactionReady=false;
+
+function reactionGame(){
+
+  document.getElementById("gameTitle").textContent="⚡ Quick Reaction";
+
+  reactionReady=false;
+
+  document.getElementById("gameContent").innerHTML=`
+    <p>Wait until the button turns READY.</p>
+
+    <button id="reactionButton"
+    class="main-btn"
+    onclick="reactionClick()">
+    WAIT...
+    </button>
+  `;
+
+  let delay=1000+Math.random()*3000;
+
+  reactionTimer=setTimeout(()=>{
+
+    reactionReady=true;
+
+    document.getElementById("reactionButton").textContent="🚀 TAP NOW!";
+
+  },delay);
+}
+
+function reactionClick(){
+
+  if(!reactionReady){
+
+    clearTimeout(reactionTimer);
+
+    document.getElementById("message").textContent=
+      "❌ Too early!";
+
+    setTimeout(reactionGame,1000);
+
+    return;
+  }
+
+  addScore(15);
+  question++;
+
+  document.getElementById("message").textContent=
+    "⚡ Great reaction!";
+
+  setTimeout(()=>{
+
+    if(question>=3){
+      level=Math.min(level+1,4);
+      question=0;
+    }
+
+    updateStats();
+    reactionGame();
+
+  },700);
+}
+
+
+/* QUIZ */
+
+const quizData=[
+
+{
+q:"Which planet is known as the Red Planet?",
+a:["Earth","Mars","Venus","Jupiter"],
+c:1
+},
+
+{
+q:"How many days are there in a leap year?",
+a:["365","366","364","360"],
+c:1
+},
+
+{
+q:"Which gas do humans need to breathe?",
+a:["Oxygen","Helium","Hydrogen","Neon"],
+c:0
+},
+
+{
+q:"What is 12 × 8?",
+a:["86","96","108","88"],
+c:1
+},
+
+{
+q:"Which is the largest ocean?",
+a:["Atlantic","Indian","Pacific","Arctic"],
+c:2
+},
+
+{
+q:"How many sides does a hexagon have?",
+a:["5","6","7","8"],
+c:1
+}
+
+];
+
+function quizGame(){
+
+  document.getElementById("gameTitle").textContent="🎯 Brain Quiz";
+
+  let q=quizData[Math.floor(Math.random()*quizData.length)];
+
+  let html=`<h3>${q.q}</h3>`;
+
+  q.a.forEach((answer,i)=>{
+
+    html+=`
+      <button class="choice"
+      onclick="answerQuiz(this,${i},${q.c})">
+      ${answer}
+      </button>
+    `;
+
+  });
+
+  document.getElementById("gameContent").innerHTML=html;
+  document.getElementById("message").textContent="";
+}
+
+function answerQuiz(button,answer,correct){
+
+  let buttons=document.querySelectorAll(".choice");
+
+  buttons.forEach(b=>b.disabled=true);
+
+  if(answer===correct){
+
+    button.classList.add("correct");
+
+    addScore(10);
+
+    document.getElementById("message").textContent=
+      "✅ Correct!";
+
+  }else{
+
+    button.classList.add("wrong");
+
+    document.getElementById("message").textContent=
+      "❌ Try again!";
+
+  }
+
+  question++;
+
+  setTimeout(()=>{
+
+    if(question>=3){
+
+      level=Math.min(level+1,4);
+      question=0;
+
+    }
+
+    updateStats();
+    quizGame();
+
+  },900);
+}
+
+updateStats();
+
+</script>
 
 </body>
 </html>
