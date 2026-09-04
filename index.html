@@ -2,754 +2,777 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>MindSprint - Learn Play Remember</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MindSprint — Learn • Play • Remember</title>
 
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-  font-family:Arial,sans-serif;
-}
-
+*{box-sizing:border-box;margin:0;padding:0}
 body{
-  background:#0b1020;
+  font-family:Arial,sans-serif;
+  background:#070d20;
   color:#fff;
   min-height:100vh;
 }
-
 .app{
-  width:100%;
-  max-width:700px;
+  max-width:760px;
   margin:auto;
-  padding:20px;
+  padding:18px;
 }
-
-header{
-  text-align:center;
-  padding:20px 10px;
-}
-
-.logo{
-  font-size:42px;
-}
-
-h1{
-  font-size:34px;
-  margin:8px 0;
-}
-
-.subtitle{
-  color:#aab4d0;
-  font-size:16px;
-}
+header{text-align:center;padding:18px 5px 25px}
+.logo{font-size:55px}
+h1{font-size:38px;margin:5px 0}
+.subtitle{color:#aab4d0;font-size:17px}
 
 .card{
-  background:#151d33;
-  border:1px solid #293452;
-  border-radius:20px;
+  background:#111a33;
+  border:1px solid #293756;
+  border-radius:24px;
   padding:20px;
   margin:15px 0;
 }
-
-.section-title{
-  font-size:22px;
-  margin-bottom:15px;
-}
-
+.title{font-size:24px;margin-bottom:15px}
 .grid{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:12px;
 }
-
 button{
   border:0;
-  border-radius:14px;
+  border-radius:15px;
   padding:16px 12px;
   font-size:16px;
   font-weight:bold;
-  cursor:pointer;
-  background:#263452;
   color:white;
+  background:#263a62;
+  cursor:pointer;
 }
-
-button:active{
-  transform:scale(.97);
-}
-
-.main-btn{
-  width:100%;
-  margin-top:10px;
-}
-
-.levels button{
-  background:#202b46;
-}
-
-.stats{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
-  margin:15px 0;
-}
+button:active{transform:scale(.97)}
+.primary{background:linear-gradient(135deg,#673de6,#9b45f5)}
+.green{background:#147d67}
+.orange{background:#b76521}
+.red{background:#a93c55}
 
 .stat{
-  background:#11182b;
-  border-radius:14px;
-  padding:12px;
-  text-align:center;
+  display:flex;
+  justify-content:space-between;
+  background:#0b1329;
+  padding:15px;
+  border-radius:15px;
+  margin-bottom:12px;
 }
+.stat b{font-size:22px}
 
-.stat strong{
+.section{margin-top:25px}
+.subject{
+  text-align:left;
+  min-height:80px;
+}
+.subject span{
   display:block;
-  font-size:22px;
-  margin-top:4px;
+  font-size:25px;
+  margin-bottom:5px;
 }
+.subject small{color:#aeb8d3}
 
-.game{
-  text-align:center;
+.hidden{display:none!important}
+
+.back{
+  background:#202d4b;
+  margin-bottom:15px;
 }
+.question{
+  font-size:21px;
+  line-height:1.5;
+  margin:18px 0;
+}
+.option{
+  width:100%;
+  text-align:left;
+  margin:7px 0;
+  background:#1c2b4d;
+}
+.correct{background:#137653!important}
+.wrong{background:#9b3048!important}
 
-.big-number{
-  font-size:48px;
-  letter-spacing:5px;
-  margin:30px 0;
-  min-height:60px;
+.progress{
+  height:10px;
+  background:#263453;
+  border-radius:10px;
+  overflow:hidden;
+  margin:10px 0 18px;
+}
+.progress div{
+  height:100%;
+  width:0%;
+  background:#8b4df4;
 }
 
 .memory-grid{
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:10px;
+  gap:9px;
   margin-top:20px;
 }
-
-.memory-card{
+.memory{
   aspect-ratio:1;
   font-size:25px;
-  background:#263452;
+  padding:0;
+  background:#24385e;
 }
+.memory.open{background:#7045df}
+.memory.done{background:#137653}
 
-.hidden{
-  display:none;
+.big{
+  font-size:55px;
+  text-align:center;
+  padding:35px 0;
 }
-
-.choice{
-  width:100%;
-  margin:7px 0;
-  background:#263452;
-}
-
-.correct{
-  background:#20734a !important;
-}
-
-.wrong{
-  background:#8a3030 !important;
-}
-
-.back{
-  background:#39445f;
-  margin-bottom:10px;
-}
-
-.message{
-  min-height:25px;
-  margin:15px 0;
-  font-weight:bold;
-}
-
-.progress{
-  height:8px;
-  background:#28324b;
-  border-radius:10px;
-  overflow:hidden;
-  margin:15px 0;
-}
-
-.progress div{
-  height:100%;
-  width:0%;
-  background:#fff;
-  transition:.3s;
-}
+.center{text-align:center}
 
 footer{
   text-align:center;
-  color:#7783a3;
-  padding:25px 0;
+  color:#71809f;
+  padding:30px 5px;
   font-size:13px;
 }
 
-@media(max-width:450px){
-  .grid{
-    grid-template-columns:1fr;
-  }
-  h1{
-    font-size:30px;
-  }
+@media(max-width:520px){
+  .grid{grid-template-columns:1fr}
+  h1{font-size:34px}
+  .memory-grid{grid-template-columns:repeat(4,1fr)}
 }
 </style>
 </head>
 
 <body>
-
 <div class="app">
 
 <header>
   <div class="logo">🧠</div>
   <h1>MindSprint</h1>
-  <p class="subtitle">Learn • Play • Remember</p>
+  <div class="subtitle">Learn • Play • Remember</div>
 </header>
 
-<!-- HOME -->
 <div id="home">
 
 <div class="card">
-  <div class="section-title">🎮 Choose Your Training</div>
-
+  <div class="title">🎮 Brain Training</div>
   <div class="grid">
-    <button onclick="startGame('memory')">🧠 Memory Match</button>
-    <button onclick="startGame('number')">🔢 Number Memory</button>
-    <button onclick="startGame('reaction')">⚡ Quick Reaction</button>
-    <button onclick="startGame('quiz')">🎯 Brain Quiz</button>
+    <button onclick="startMemory()">🧠 Memory Match</button>
+    <button onclick="startNumber()">🔢 Number Memory</button>
+    <button onclick="startReaction()">⚡ Quick Reaction</button>
+    <button onclick="startQuiz('brain')">🎯 Brain Quiz</button>
   </div>
 </div>
 
 <div class="card">
-  <div class="section-title">📚 Study Zone</div>
+  <div class="title">📚 Competitive Exams</div>
 
   <div class="grid">
-    <button onclick="alert('SSC practice will be added in the next version!')">
-      📚 SSC
+    <button class="subject" onclick="startQuiz('ssc')">
+      <span>🇮🇳 SSC</span>
+      <small>Maths • Reasoning • GK • English</small>
     </button>
 
-    <button onclick="alert('Railway practice will be added in the next version!')">
-      🚆 Railway
-    </button>
-
-    <button onclick="alert('Banking practice will be added in the next version!')">
-      🏦 Banking
-    </button>
-
-    <button onclick="alert('UPSC practice will be added in the next version!')">
-      🏛️ UPSC
+    <button class="subject" onclick="startQuiz('upsc')">
+      <span>🏛️ UPSC</span>
+      <small>History • Polity • Geography • Economy</small>
     </button>
   </div>
 </div>
 
 <div class="card">
-  <div class="section-title">🚀 Knowledge Zone</div>
+  <div class="title">📖 Study Zone</div>
+  <div class="grid">
+    <button onclick="showTopics('ssc')">📘 SSC Topics</button>
+    <button onclick="showTopics('upsc')">📕 UPSC Topics</button>
+    <button onclick="showTopics('general')">🔬 General Knowledge</button>
+    <button onclick="showTopics('science')">🚀 Science & Technology</button>
+  </div>
+</div>
 
-  <button class="main-btn"
-  onclick="alert('AI • Technology • Space • Science lessons coming soon!')">
-  🚀 AI • Technology • Space • Science
-  </button>
+<div class="card">
+  <div class="title">📊 Your Progress</div>
+  <div class="stat">
+    <span>🏆 Total Score</span>
+    <b id="score">0</b>
+  </div>
+  <div class="stat">
+    <span>🔥 Games Played</span>
+    <b id="played">0</b>
+  </div>
+  <button class="primary" onclick="resetProgress()">Reset Progress</button>
 </div>
 
 </div>
 
 
-<!-- GAME -->
-<div id="gameScreen" class="hidden">
-
-<button class="back" onclick="goHome()">← Home</button>
-
-<div class="card game">
-
-<h2 id="gameTitle">Game</h2>
-
-<div class="stats">
-  <div class="stat">
-    Score
-    <strong id="score">0</strong>
-  </div>
-
-  <div class="stat">
-    Level
-    <strong id="levelText">Easy</strong>
-  </div>
-
-  <div class="stat">
-    Best
-    <strong id="best">0</strong>
-  </div>
+<!-- TOPICS -->
+<div id="topics" class="hidden">
+<button class="back" onclick="goHome()">← Back</button>
+<div class="card">
+<h2 id="topicTitle" class="title"></h2>
+<div id="topicList"></div>
 </div>
+</div>
+
+
+<!-- QUIZ -->
+<div id="quiz" class="hidden">
+<button class="back" onclick="goHome()">← Back</button>
+
+<div class="card">
+<h2 id="quizTitle" class="title">Quiz</h2>
 
 <div class="progress">
-  <div id="progressBar"></div>
+<div id="quizProgress"></div>
 </div>
 
-<div id="gameContent"></div>
+<div id="question" class="question"></div>
+<div id="options"></div>
 
-<div id="message" class="message"></div>
-
+<div class="center">
+<p id="quizMessage"></p>
+<button id="nextBtn" class="primary hidden" onclick="nextQuestion()">Next Question →</button>
+</div>
+</div>
 </div>
 
+
+<!-- MEMORY -->
+<div id="memoryGame" class="hidden">
+<button class="back" onclick="goHome()">← Back</button>
+
+<div class="card center">
+<h2 class="title">🧠 Memory Match</h2>
+<p>Find all matching pairs.</p>
+<div id="memoryGrid" class="memory-grid"></div>
+<p id="memoryMessage" style="margin-top:15px"></p>
 </div>
+</div>
+
+
+<!-- NUMBER -->
+<div id="numberGame" class="hidden">
+<button class="back" onclick="goHome()">← Back</button>
+
+<div class="card center">
+<h2 class="title">🔢 Number Memory</h2>
+<p>Remember the number and type it below.</p>
+
+<div id="numberDisplay" class="big">Ready?</div>
+
+<input id="numberInput"
+style="width:100%;padding:16px;border-radius:12px;border:0;font-size:20px;text-align:center"
+placeholder="Enter number"
+type="number">
+
+<button class="primary" style="width:100%;margin-top:12px"
+onclick="checkNumber()">Check Answer</button>
+
+<p id="numberMessage" style="margin-top:15px"></p>
+</div>
+</div>
+
+
+<!-- REACTION -->
+<div id="reactionGame" class="hidden">
+<button class="back" onclick="goHome()">← Back</button>
+
+<div class="card center">
+<h2 class="title">⚡ Quick Reaction</h2>
+<p>Wait for GREEN, then tap!</p>
+
+<button id="reactionButton"
+style="width:100%;height:220px;margin-top:20px;font-size:25px"
+onclick="reactionClick()">
+START
+</button>
+
+<p id="reactionMessage" style="margin-top:15px"></p>
+</div>
+</div>
+
 
 <footer>
-  MindSprint • Train Your Brain • Improve Your Focus
+MindSprint • Learn smarter. Play sharper. Remember more.
 </footer>
 
 </div>
 
-
 <script>
+/* =========================
+   PROGRESS
+========================= */
 
-let currentGame="";
-let score=0;
-let level=1;
-let question=0;
-let best=Number(localStorage.getItem("mindsprintBest")||0);
-
-let memoryValues=[];
-let memoryOpened=[];
-let memoryMatched=0;
-
-const levels=["Easy","Medium","Hard","Advanced"];
-
-function startGame(type){
-
-  currentGame=type;
-  score=0;
-  level=1;
-  question=0;
-
-  document.getElementById("home").classList.add("hidden");
-  document.getElementById("gameScreen").classList.remove("hidden");
-
-  updateStats();
-
-  if(type==="memory") memoryGame();
-  if(type==="number") numberGame();
-  if(type==="reaction") reactionGame();
-  if(type==="quiz") quizGame();
-}
+let score = Number(localStorage.getItem("mindScore") || 0);
+let played = Number(localStorage.getItem("mindPlayed") || 0);
 
 function updateStats(){
-
   document.getElementById("score").textContent=score;
-  document.getElementById("levelText").textContent=levels[level-1];
-  document.getElementById("best").textContent=best;
-
-  document.getElementById("progressBar").style.width=
-    Math.min(question*20,100)+"%";
+  document.getElementById("played").textContent=played;
 }
+updateStats();
 
 function addScore(points){
-
-  score+=points;
-
-  if(score>best){
-    best=score;
-    localStorage.setItem("mindsprintBest",best);
-  }
-
+  score += points;
+  localStorage.setItem("mindScore",score);
   updateStats();
+}
+
+function gamePlayed(){
+  played++;
+  localStorage.setItem("mindPlayed",played);
+  updateStats();
+}
+
+function resetProgress(){
+  if(confirm("Reset all progress?")){
+    score=0;
+    played=0;
+    localStorage.removeItem("mindScore");
+    localStorage.removeItem("mindPlayed");
+    updateStats();
+  }
+}
+
+
+/* =========================
+   NAVIGATION
+========================= */
+
+const pages=["home","topics","quiz","memoryGame","numberGame","reactionGame"];
+
+function hideAll(){
+  pages.forEach(x=>document.getElementById(x).classList.add("hidden"));
 }
 
 function goHome(){
-
-  document.getElementById("gameScreen").classList.add("hidden");
+  hideAll();
   document.getElementById("home").classList.remove("hidden");
 }
 
+function showPage(id){
+  hideAll();
+  document.getElementById(id).classList.remove("hidden");
+}
 
-/* MEMORY MATCH */
 
-function memoryGame(){
+/* =========================
+   TOPICS
+========================= */
 
-  document.getElementById("gameTitle").textContent="🧠 Memory Match";
+const topics={
+ssc:[
+["➗ Mathematics","Percentage, Profit & Loss, Ratio, Average, Time & Work"],
+["🧩 Reasoning","Analogy, Series, Coding-Decoding, Blood Relations"],
+["🌍 General Awareness","History, Geography, Polity, Economics"],
+["🔤 English","Grammar, Vocabulary, Synonyms, Antonyms"]
+],
 
-  const emojis=["🍎","🚀","⭐","🎯","🧩","🌈","⚡","🎵"];
+upsc:[
+["🏛️ History","Ancient, Medieval, Modern India & World History"],
+["⚖️ Polity","Constitution, Parliament, Judiciary, Governance"],
+["🌏 Geography","Physical, Indian & World Geography"],
+["💰 Economy","Indian Economy, Banking, Budget & Development"],
+["🔬 Science","Physics, Chemistry, Biology & Technology"],
+["📰 Current Affairs","National & International events"]
+],
 
-  memoryValues=[...emojis,...emojis]
-    .sort(()=>Math.random()-.5);
+general:[
+["🇮🇳 India","States, Capitals, Rivers, Monuments & Culture"],
+["🌍 World","Countries, Capitals, Continents & Organizations"],
+["🏆 Sports","Major sports, tournaments & achievements"],
+["📜 Important Days","National & International important days"]
+],
 
-  memoryOpened=[];
-  memoryMatched=0;
+science:[
+["🚀 Space","Planets, ISRO, Satellites & Missions"],
+["⚛️ Physics","Motion, Force, Energy, Light & Electricity"],
+["🧪 Chemistry","Atoms, Elements, Reactions & Materials"],
+["🧬 Biology","Human body, Cells, Plants & Animals"]
+]
+};
 
-  let html='<p>Match all identical cards!</p>';
-  html+='<div class="memory-grid">';
+function showTopics(type){
+  showPage("topics");
 
-  memoryValues.forEach((x,i)=>{
+  let names={
+    ssc:"📘 SSC Study Zone",
+    upsc:"📕 UPSC Study Zone",
+    general:"🌍 General Knowledge",
+    science:"🔬 Science & Technology"
+  };
+
+  document.getElementById("topicTitle").textContent=names[type];
+
+  let html="";
+  topics[type].forEach(t=>{
     html+=`
-      <button class="memory-card"
-      id="m${i}"
-      onclick="openMemory(${i})">?</button>
-    `;
+    <div style="background:#1b2948;padding:17px;border-radius:15px;margin:10px 0">
+      <b style="font-size:18px">${t[0]}</b>
+      <p style="color:#aeb8d3;margin-top:7px">${t[1]}</p>
+    </div>`;
   });
 
-  html+='</div>';
-
-  document.getElementById("gameContent").innerHTML=html;
-  document.getElementById("message").textContent="";
-}
-
-function openMemory(i){
-
-  if(memoryOpened.includes(i)) return;
-  if(document.getElementById("m"+i).textContent!=="?") return;
-
-  document.getElementById("m"+i).textContent=memoryValues[i];
-
-  memoryOpened.push(i);
-
-  if(memoryOpened.length===2){
-
-    let a=memoryOpened[0];
-    let b=memoryOpened[1];
-
-    if(memoryValues[a]===memoryValues[b]){
-
-      memoryMatched++;
-      addScore(10);
-
-      memoryOpened=[];
-
-      if(memoryMatched===memoryValues.length/2){
-
-        document.getElementById("message").textContent=
-          "🎉 Excellent! All pairs matched!";
-
-        setTimeout(()=>{
-          level=Math.min(level+1,4);
-          question++;
-          updateStats();
-          memoryGame();
-        },1000);
-      }
-
-    }else{
-
-      setTimeout(()=>{
-
-        document.getElementById("m"+a).textContent="?";
-        document.getElementById("m"+b).textContent="?";
-
-        memoryOpened=[];
-
-      },700);
-    }
-  }
+  document.getElementById("topicList").innerHTML=html;
 }
 
 
-/* NUMBER MEMORY */
+/* =========================
+   QUIZ DATA
+========================= */
 
-function numberGame(){
+const quizzes={
 
-  document.getElementById("gameTitle").textContent="🔢 Number Memory";
-
-  let length=level+3;
-
-  let number="";
-
-  for(let i=0;i<length;i++){
-    number+=Math.floor(Math.random()*10);
-  }
-
-  document.getElementById("gameContent").innerHTML=`
-    <p>Remember this number:</p>
-    <div class="big-number">${number}</div>
-  `;
-
-  document.getElementById("message").textContent=
-    "You have 3 seconds...";
-
-  setTimeout(()=>{
-
-    document.getElementById("gameContent").innerHTML=`
-      <p>What was the number?</p>
-
-      <input id="numberInput"
-      inputmode="numeric"
-      style="width:100%;padding:15px;border-radius:12px;
-      border:0;font-size:20px;margin:15px 0;text-align:center">
-
-      <button class="main-btn" onclick="checkNumber('${number}')">
-        Check Answer
-      </button>
-    `;
-
-    document.getElementById("message").textContent="";
-
-  },3000);
-}
-
-function checkNumber(correct){
-
-  let input=document.getElementById("numberInput").value;
-
-  if(input===correct){
-
-    addScore(20);
-    question++;
-
-    document.getElementById("message").textContent=
-      "✅ Correct!";
-
-    setTimeout(()=>{
-
-      if(question>=3){
-        level=Math.min(level+1,4);
-        question=0;
-      }
-
-      updateStats();
-      numberGame();
-
-    },800);
-
-  }else{
-
-    document.getElementById("message").textContent=
-      "❌ Not quite. The correct number was "+correct;
-
-    setTimeout(numberGame,1200);
-  }
-}
-
-
-/* REACTION */
-
-let reactionTimer;
-let reactionReady=false;
-
-function reactionGame(){
-
-  document.getElementById("gameTitle").textContent="⚡ Quick Reaction";
-
-  reactionReady=false;
-
-  document.getElementById("gameContent").innerHTML=`
-    <p>Wait until the button turns READY.</p>
-
-    <button id="reactionButton"
-    class="main-btn"
-    onclick="reactionClick()">
-    WAIT...
-    </button>
-  `;
-
-  let delay=1000+Math.random()*3000;
-
-  reactionTimer=setTimeout(()=>{
-
-    reactionReady=true;
-
-    document.getElementById("reactionButton").textContent="🚀 TAP NOW!";
-
-  },delay);
-}
-
-function reactionClick(){
-
-  if(!reactionReady){
-
-    clearTimeout(reactionTimer);
-
-    document.getElementById("message").textContent=
-      "❌ Too early!";
-
-    setTimeout(reactionGame,1000);
-
-    return;
-  }
-
-  addScore(15);
-  question++;
-
-  document.getElementById("message").textContent=
-    "⚡ Great reaction!";
-
-  setTimeout(()=>{
-
-    if(question>=3){
-      level=Math.min(level+1,4);
-      question=0;
-    }
-
-    updateStats();
-    reactionGame();
-
-  },700);
-}
-
-/* FOCUS GAME */
-
-function focusGame(){
-
-  document.getElementById("gameTitle").textContent="🎯 Focus Test";
-
-  let target=Math.floor(Math.random()*9)+1;
-
-  document.getElementById("gameContent").innerHTML=`
-    <p>Focus on the number and remember it.</p>
-    <div class="big-num">${target}</div>
-  `;
-
-  document.getElementById("message").textContent="Remember the number...";
-
-  setTimeout(()=>{
-
-    document.getElementById("gameContent").innerHTML=`
-      <p>What was the number?</p>
-      <input id="focusInput" type="number"
-      style="width:100%;padding:15px;border-radius:12px;
-      border:0;font-size:20px;text-align:center">
-
-      <button class="main-btn" onclick="checkFocus(${target})">
-      Check Answer
-      </button>
-    `;
-
-    document.getElementById("message").textContent="";
-
-  },2000);
-}
-
-function checkFocus(correct){
-
-  let input=document.getElementById("focusInput").value;
-
-  if(Number(input)===correct){
-
-    addScore(20);
-    question++;
-
-    document.getElementById("message").textContent="✅ Excellent Focus!";
-
-  }else{
-
-    document.getElementById("message").textContent=
-    "❌ Wrong! The number was "+correct;
-
-  }
-
-  setTimeout(()=>{
-
-    if(question>=3){
-      level=Math.min(level+1,4);
-      question=0;
-    }
-
-    updateStats();
-    focusGame();
-
-  },1000);
-}
-/* QUIZ */
-
-const quizData=[
-
+brain:[
 {
-q:"Which planet is known as the Red Planet?",
-a:["Earth","Mars","Venus","Jupiter"],
-c:1
-},
-
-{
-q:"How many days are there in a leap year?",
-a:["365","366","364","360"],
-c:1
-},
-
-{
-q:"Which gas do humans need to breathe?",
-a:["Oxygen","Helium","Hydrogen","Neon"],
-c:0
-},
-
-{
-q:"What is 12 × 8?",
-a:["86","96","108","88"],
-c:1
-},
-
-{
-q:"Which is the largest ocean?",
-a:["Atlantic","Indian","Pacific","Arctic"],
+q:"Which number comes next: 2, 4, 8, 16, ?",
+a:["20","24","32","36"],
 c:2
 },
-
+{
+q:"Which planet is known as the Red Planet?",
+a:["Earth","Mars","Jupiter","Venus"],
+c:1
+},
 {
 q:"How many sides does a hexagon have?",
 a:["5","6","7","8"],
 c:1
+},
+{
+q:"Which organ pumps blood through the body?",
+a:["Lungs","Brain","Heart","Kidney"],
+c:2
+}
+],
+
+ssc:[
+{
+q:"What is 25% of 200?",
+a:["25","40","50","75"],
+c:2
+},
+{
+q:"If 5 × 6 = 30, what is 30 ÷ 5?",
+a:["4","5","6","7"],
+c:2
+},
+{
+q:"Who is known as the Father of the Indian Constitution?",
+a:["Mahatma Gandhi","B. R. Ambedkar","Jawaharlal Nehru","Sardar Patel"],
+c:1
+},
+{
+q:"Opposite of 'Ancient' is:",
+a:["Old","Modern","Historic","Past"],
+c:1
+},
+{
+q:"Which is the largest planet?",
+a:["Earth","Mars","Saturn","Jupiter"],
+c:3
+},
+{
+q:"2, 6, 12, 20, ?",
+a:["24","28","30","32"],
+c:1
+}
+],
+
+upsc:[
+{
+q:"The Constitution of India came into force on:",
+a:["15 Aug 1947","26 Jan 1950","26 Nov 1949","2 Oct 1950"],
+c:1
+},
+{
+q:"Who was the first Governor-General of independent India?",
+a:["Lord Mountbatten","Rajendra Prasad","C. Rajagopalachari","Nehru"],
+c:0
+},
+{
+q:"Which is the longest river in India?",
+a:["Yamuna","Ganga","Godavari","Narmada"],
+c:1
+},
+{
+q:"The Reserve Bank of India is India's:",
+a:["Central bank","Commercial bank","Private bank","Cooperative bank"],
+c:0
+},
+{
+q:"Fundamental Rights are contained in which part of the Constitution?",
+a:["Part I","Part II","Part III","Part IV"],
+c:2
+},
+{
+q:"Which gas is most abundant in Earth's atmosphere?",
+a:["Oxygen","Nitrogen","Carbon dioxide","Hydrogen"],
+c:1
+}
+]
+};
+
+let quizData=[];
+let quizIndex=0;
+let quizScore=0;
+let quizType="";
+
+
+function startQuiz(type){
+  quizType=type;
+  quizData=[...quizzes[type]];
+  quizIndex=0;
+  quizScore=0;
+  showPage("quiz");
+
+  let titles={
+    brain:"🎯 Brain Quiz",
+    ssc:"🇮🇳 SSC Practice Quiz",
+    upsc:"🏛️ UPSC Practice Quiz"
+  };
+
+  document.getElementById("quizTitle").textContent=titles[type];
+  showQuestion();
 }
 
-];
 
-function quizGame(){
+function showQuestion(){
+  let q=quizData[quizIndex];
 
-  document.getElementById("gameTitle").textContent="🎯 Brain Quiz";
+  document.getElementById("quizProgress").style.width=
+    ((quizIndex)/quizData.length*100)+"%";
 
-  let q=quizData[Math.floor(Math.random()*quizData.length)];
+  document.getElementById("question").innerHTML=
+    `<b>Q${quizIndex+1}. ${q.q}</b>`;
 
-  let html=`<h3>${q.q}</h3>`;
+  document.getElementById("quizMessage").textContent="";
+  document.getElementById("nextBtn").classList.add("hidden");
 
+  let html="";
   q.a.forEach((answer,i)=>{
-
     html+=`
-      <button class="choice"
-      onclick="answerQuiz(this,${i},${q.c})">
-      ${answer}
-      </button>
-    `;
-
+      <button class="option" onclick="answerQuiz(${i},this)">
+        ${String.fromCharCode(65+i)}. ${answer}
+      </button>`;
   });
 
-  document.getElementById("gameContent").innerHTML=html;
-  document.getElementById("message").textContent="";
+  document.getElementById("options").innerHTML=html;
 }
 
-function answerQuiz(button,answer,correct){
 
-  let buttons=document.querySelectorAll(".choice");
+function answerQuiz(index,btn){
+  let q=quizData[quizIndex];
 
-  buttons.forEach(b=>b.disabled=true);
+  document.querySelectorAll(".option").forEach(b=>b.disabled=true);
 
-  if(answer===correct){
-
-    button.classList.add("correct");
-
+  if(index===q.c){
+    btn.classList.add("correct");
+    quizScore++;
     addScore(10);
-
-    document.getElementById("message").textContent=
-      "✅ Correct!";
-
+    document.getElementById("quizMessage").textContent="✅ Correct!";
   }else{
-
-    button.classList.add("wrong");
-
-    document.getElementById("message").textContent=
-      "❌ Try again!";
-
+    btn.classList.add("wrong");
+    document.querySelectorAll(".option")[q.c].classList.add("correct");
+    document.getElementById("quizMessage").textContent="❌ Correct answer highlighted.";
   }
 
-  question++;
-
-  setTimeout(()=>{
-
-    if(question>=3){
-
-      level=Math.min(level+1,4);
-      question=0;
-
-    }
-
-    updateStats();
-    quizGame();
-
-  },900);
+  document.getElementById("nextBtn").classList.remove("hidden");
 }
 
-updateStats();
 
+function nextQuestion(){
+  quizIndex++;
+
+  if(quizIndex>=quizData.length){
+    document.getElementById("quizProgress").style.width="100%";
+    document.getElementById("question").innerHTML=
+      `<div class="center">🏆 Quiz Complete!<br><br>
+      Score: <b>${quizScore}/${quizData.length}</b></div>`;
+
+    document.getElementById("options").innerHTML="";
+    document.getElementById("nextBtn").textContent="Back Home";
+    document.getElementById("nextBtn").onclick=goHome;
+    gamePlayed();
+  }else{
+    showQuestion();
+  }
+}
+
+
+/* =========================
+   MEMORY MATCH
+========================= */
+
+let firstCard=null;
+let secondCard=null;
+let lock=false;
+let matches=0;
+
+function startMemory(){
+  showPage("memoryGame");
+
+  const symbols=["🍎","🚀","🧠","⭐","🎯","🔥","🎵","🌍"];
+  let cards=[...symbols,...symbols];
+  cards.sort(()=>Math.random()-.5);
+
+  firstCard=null;
+  secondCard=null;
+  lock=false;
+  matches=0;
+
+  let html="";
+  cards.forEach((s,i)=>{
+    html+=`
+      <button class="memory" id="m${i}" onclick="flipMemory(${i},'${s}')">?</button>`;
+  });
+
+  document.getElementById("memoryGrid").innerHTML=html;
+  document.getElementById("memoryMessage").textContent="Find all pairs!";
+}
+
+
+function flipMemory(i,s){
+  if(lock)return;
+
+  let card=document.getElementById("m"+i);
+  if(card.classList.contains("done")||card===firstCard)return;
+
+  card.textContent=s;
+  card.classList.add("open");
+
+  if(!firstCard){
+    firstCard=card;
+    firstCard.dataset.symbol=s;
+  }else{
+    secondCard=card;
+    secondCard.dataset.symbol=s;
+    lock=true;
+
+    setTimeout(()=>{
+      if(firstCard.dataset.symbol===secondCard.dataset.symbol){
+        firstCard.classList.add("done");
+        secondCard.classList.add("done");
+        matches++;
+        addScore(20);
+
+        if(matches===8){
+          document.getElementById("memoryMessage").textContent=
+            "🎉 Excellent! All pairs matched!";
+          gamePlayed();
+        }
+
+      }else{
+        firstCard.textContent="?";
+        secondCard.textContent="?";
+        firstCard.classList.remove("open");
+        secondCard.classList.remove("open");
+      }
+
+      firstCard=null;
+      secondCard=null;
+      lock=false;
+    },600);
+  }
+}
+
+
+/* =========================
+   NUMBER MEMORY
+========================= */
+
+let secretNumber="";
+
+function startNumber(){
+  showPage("numberGame");
+
+  secretNumber=Math.floor(10000+Math.random()*90000).toString();
+
+  document.getElementById("numberDisplay").textContent=secretNumber;
+  document.getElementById("numberInput").value="";
+  document.getElementById("numberMessage").textContent="Remember it!";
+
+  setTimeout(()=>{
+    document.getElementById("numberDisplay").textContent="???";
+    document.getElementById("numberMessage").textContent=
+      "Now enter the number.";
+  },2500);
+}
+
+function checkNumber(){
+  let input=document.getElementById("numberInput").value;
+
+  if(input===secretNumber){
+    document.getElementById("numberMessage").textContent=
+      "🎉 Perfect! +50 points";
+    addScore(50);
+  }else{
+    document.getElementById("numberMessage").textContent=
+      "❌ Not quite. Number was "+secretNumber;
+  }
+
+  gamePlayed();
+}
+
+
+/* =========================
+   REACTION GAME
+========================= */
+
+let reactionReady=false;
+let reactionStart=0;
+let reactionTimer=null;
+
+function startReaction(){
+  showPage("reactionGame");
+
+  reactionReady=false;
+
+  let b=document.getElementById("reactionButton");
+  b.textContent="WAIT...";
+  b.style.background="#a93c55";
+
+  let delay=1500+Math.random()*3000;
+
+  reactionTimer=setTimeout(()=>{
+    reactionReady=true;
+    reactionStart=Date.now();
+    b.textContent="TAP NOW!";
+    b.style.background="#137d67";
+  },delay);
+
+  document.getElementById("reactionMessage").textContent="";
+}
+
+function reactionClick(){
+  let b=document.getElementById("reactionButton");
+
+  if(!reactionReady){
+    clearTimeout(reactionTimer);
+    b.textContent="Too Early! Try Again";
+    b.style.background="#a93c55";
+    document.getElementById("reactionMessage").textContent=
+      "Wait for green.";
+    return;
+  }
+
+  let time=Date.now()-reactionStart;
+  reactionReady=false;
+
+  let points=Math.max(10,100-Math.floor(time/5));
+  addScore(points);
+  gamePlayed();
+
+  b.textContent="⚡ "+time+" ms";
+  b.style.background="#7045df";
+
+  document.getElementById("reactionMessage").textContent=
+    "Great reaction! +" + points + " points";
+
+  setTimeout(startReaction,1500);
+}
 </script>
 
 </body>
