@@ -579,7 +579,69 @@ function reactionClick(){
   },700);
 }
 
+/* FOCUS GAME */
 
+function focusGame(){
+
+  document.getElementById("gameTitle").textContent="🎯 Focus Test";
+
+  let target=Math.floor(Math.random()*9)+1;
+
+  document.getElementById("gameContent").innerHTML=`
+    <p>Focus on the number and remember it.</p>
+    <div class="big-num">${target}</div>
+  `;
+
+  document.getElementById("message").textContent="Remember the number...";
+
+  setTimeout(()=>{
+
+    document.getElementById("gameContent").innerHTML=`
+      <p>What was the number?</p>
+      <input id="focusInput" type="number"
+      style="width:100%;padding:15px;border-radius:12px;
+      border:0;font-size:20px;text-align:center">
+
+      <button class="main-btn" onclick="checkFocus(${target})">
+      Check Answer
+      </button>
+    `;
+
+    document.getElementById("message").textContent="";
+
+  },2000);
+}
+
+function checkFocus(correct){
+
+  let input=document.getElementById("focusInput").value;
+
+  if(Number(input)===correct){
+
+    addScore(20);
+    question++;
+
+    document.getElementById("message").textContent="✅ Excellent Focus!";
+
+  }else{
+
+    document.getElementById("message").textContent=
+    "❌ Wrong! The number was "+correct;
+
+  }
+
+  setTimeout(()=>{
+
+    if(question>=3){
+      level=Math.min(level+1,4);
+      question=0;
+    }
+
+    updateStats();
+    focusGame();
+
+  },1000);
+}
 /* QUIZ */
 
 const quizData=[
