@@ -2,777 +2,1552 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MindSprint — Learn • Play • Remember</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+<meta name="theme-color" content="#0b1020">
+<title>MindSprint</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
 body{
-  font-family:Arial,sans-serif;
-  background:#070d20;
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#080d1a;
   color:#fff;
   min-height:100vh;
 }
-.app{
-  max-width:760px;
-  margin:auto;
-  padding:18px;
-}
-header{text-align:center;padding:18px 5px 25px}
-.logo{font-size:55px}
-h1{font-size:38px;margin:5px 0}
-.subtitle{color:#aab4d0;font-size:17px}
 
-.card{
-  background:#111a33;
-  border:1px solid #293756;
-  border-radius:24px;
-  padding:20px;
-  margin:15px 0;
-}
-.title{font-size:24px;margin-bottom:15px}
-.grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-}
 button{
+  font:inherit;
+  color:inherit;
   border:0;
-  border-radius:15px;
-  padding:16px 12px;
-  font-size:16px;
-  font-weight:bold;
-  color:white;
-  background:#263a62;
   cursor:pointer;
 }
-button:active{transform:scale(.97)}
-.primary{background:linear-gradient(135deg,#673de6,#9b45f5)}
-.green{background:#147d67}
-.orange{background:#b76521}
-.red{background:#a93c55}
 
-.stat{
-  display:flex;
-  justify-content:space-between;
-  background:#0b1329;
-  padding:15px;
-  border-radius:15px;
-  margin-bottom:12px;
+.app{
+  width:100%;
+  max-width:520px;
+  min-height:100vh;
+  margin:auto;
+  padding:18px 15px 30px;
 }
-.stat b{font-size:22px}
 
-.section{margin-top:25px}
-.subject{
-  text-align:left;
-  min-height:80px;
+header{
+  text-align:center;
+  padding:12px 0 22px;
 }
-.subject span{
+
+.logo{
+  font-size:32px;
+  font-weight:900;
+  letter-spacing:-1px;
+}
+
+.tagline{
+  color:#9da8c4;
+  font-size:14px;
+  margin-top:5px;
+}
+
+.screen{
+  display:none;
+}
+
+.screen.active{
   display:block;
-  font-size:25px;
-  margin-bottom:5px;
 }
-.subject small{color:#aeb8d3}
 
-.hidden{display:none!important}
+.home-title{
+  font-size:21px;
+  font-weight:800;
+  margin:5px 0 14px;
+}
+
+.game-card{
+  background:linear-gradient(145deg,#151d35,#10172a);
+  border:1px solid #263252;
+  border-radius:20px;
+  padding:18px;
+  margin-bottom:13px;
+  display:flex;
+  align-items:center;
+  gap:15px;
+  transition:.15s;
+}
+
+.game-card:active{
+  transform:scale(.98);
+}
+
+.game-icon{
+  width:55px;
+  height:55px;
+  border-radius:16px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:29px;
+  background:#202b49;
+  flex-shrink:0;
+}
+
+.game-info{
+  flex:1;
+}
+
+.game-name{
+  font-size:18px;
+  font-weight:800;
+}
+
+.game-desc{
+  color:#9da8c4;
+  font-size:12px;
+  line-height:1.4;
+  margin-top:4px;
+}
+
+.play-btn{
+  background:#fff;
+  color:#101522;
+  padding:10px 13px;
+  border-radius:12px;
+  font-size:12px;
+  font-weight:800;
+}
+
+.topbar{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:18px;
+}
 
 .back{
-  background:#202d4b;
+  background:#18213a;
+  width:42px;
+  height:42px;
+  border-radius:13px;
+  font-size:20px;
+}
+
+.top-title{
+  font-size:21px;
+  font-weight:800;
+}
+
+.level-subtitle{
+  color:#9da8c4;
+  font-size:13px;
   margin-bottom:15px;
 }
-.question{
-  font-size:21px;
-  line-height:1.5;
-  margin:18px 0;
+
+.level-card{
+  background:#121a2e;
+  border:1px solid #263252;
+  border-radius:18px;
+  padding:16px;
+  margin-bottom:11px;
+  display:flex;
+  align-items:center;
+  gap:13px;
 }
-.option{
-  width:100%;
-  text-align:left;
-  margin:7px 0;
-  background:#1c2b4d;
+
+.level-number{
+  width:44px;
+  height:44px;
+  border-radius:13px;
+  background:#202b49;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:900;
 }
-.correct{background:#137653!important}
-.wrong{background:#9b3048!important}
+
+.level-info{
+  flex:1;
+}
+
+.level-name{
+  font-weight:800;
+}
+
+.level-detail{
+  color:#8e99b6;
+  font-size:11px;
+  margin-top:4px;
+}
+
+.level-btn{
+  background:#263453;
+  padding:10px 13px;
+  border-radius:11px;
+  font-size:12px;
+  font-weight:800;
+}
+
+.game-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:13px;
+}
+
+.stat{
+  background:#121a2e;
+  border:1px solid #25304c;
+  border-radius:13px;
+  padding:9px 12px;
+  text-align:center;
+  min-width:72px;
+}
+
+.stat-label{
+  display:block;
+  color:#8e99b6;
+  font-size:9px;
+  text-transform:uppercase;
+}
+
+.stat-value{
+  display:block;
+  font-weight:900;
+  margin-top:2px;
+}
 
 .progress{
-  height:10px;
-  background:#263453;
-  border-radius:10px;
+  height:7px;
+  background:#18213a;
+  border-radius:20px;
   overflow:hidden;
-  margin:10px 0 18px;
+  margin-bottom:18px;
 }
-.progress div{
+
+.progress-bar{
   height:100%;
   width:0%;
-  background:#8b4df4;
+  background:#fff;
+  transition:.25s;
 }
 
+.panel{
+  background:#10182b;
+  border:1px solid #263252;
+  border-radius:20px;
+  padding:18px;
+}
+
+.instruction{
+  color:#aab3ca;
+  text-align:center;
+  font-size:14px;
+  line-height:1.5;
+  margin:4px 0 17px;
+}
+
+.center{
+  text-align:center;
+}
+
+.big-btn{
+  background:#fff;
+  color:#0d1322;
+  padding:14px 22px;
+  border-radius:14px;
+  font-weight:900;
+  margin:6px;
+}
+
+.secondary-btn{
+  background:#202b49;
+  padding:13px 18px;
+  border-radius:13px;
+  font-weight:800;
+  margin:5px;
+}
+
+.message{
+  min-height:25px;
+  text-align:center;
+  font-weight:800;
+  margin:12px 0;
+}
+
+/* MEMORY */
 .memory-grid{
   display:grid;
-  grid-template-columns:repeat(4,1fr);
   gap:9px;
-  margin-top:20px;
+  max-width:360px;
+  margin:auto;
 }
-.memory{
+
+.memory-card{
   aspect-ratio:1;
+  background:#1b2743;
+  border:1px solid #31405f;
+  border-radius:12px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
   font-size:25px;
-  padding:0;
-  background:#24385e;
+  font-weight:900;
+  user-select:none;
 }
-.memory.open{background:#7045df}
-.memory.done{background:#137653}
 
-.big{
-  font-size:55px;
-  text-align:center;
-  padding:35px 0;
+.memory-card.show,
+.memory-card.matched{
+  background:#2a385b;
 }
-.center{text-align:center}
 
-footer{
+.memory-card.matched{
+  opacity:.6;
+}
+
+/* REACTION */
+.reaction-area{
+  height:310px;
+  border-radius:20px;
+  background:#151f36;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   text-align:center;
-  color:#71809f;
-  padding:30px 5px;
+  user-select:none;
+  position:relative;
+  overflow:hidden;
+}
+
+.reaction-target{
+  width:135px;
+  height:135px;
+  border-radius:50%;
+  background:#243251;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:17px;
+  font-weight:900;
+}
+
+.reaction-target.shape-square{
+  border-radius:20px;
+}
+
+.reaction-target.shape-triangle{
+  width:0;
+  height:0;
+  border-left:68px solid transparent;
+  border-right:68px solid transparent;
+  border-bottom:125px solid #243251;
+  background:transparent;
+  font-size:0;
+}
+
+.reaction-target.good{
+  background:#fff;
+  color:#111;
+}
+
+.reaction-target.bad{
+  background:#38405a;
+}
+
+/* MIND SHIFT */
+.shift-target{
+  width:180px;
+  height:180px;
+  margin:20px auto;
+  border-radius:30px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:25px;
+  font-weight:900;
+  background:#253251;
+}
+
+.choice-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.choice{
+  padding:15px 10px;
+  border-radius:14px;
+  background:#202b49;
+  font-weight:900;
+  min-height:54px;
+}
+
+/* LOGIC */
+.question{
+  font-size:19px;
+  font-weight:900;
+  text-align:center;
+  line-height:1.5;
+  margin:10px 0 20px;
+}
+
+.options{
+  display:grid;
+  gap:10px;
+}
+
+.option{
+  background:#202b49;
+  padding:15px;
+  border-radius:14px;
+  font-weight:800;
+  text-align:center;
+}
+
+.option:active,
+.choice:active,
+.secondary-btn:active,
+.big-btn:active,
+.level-btn:active{
+  transform:scale(.98);
+}
+
+/* CALM */
+.calm-box{
+  text-align:center;
+}
+
+.breath-circle{
+  width:190px;
+  height:190px;
+  border-radius:50%;
+  margin:25px auto;
+  background:radial-gradient(circle,#53678f 0%,#273653 45%,#151f36 70%);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:transform 4s ease-in-out;
+  box-shadow:0 0 45px rgba(100,120,170,.18);
+}
+
+.breath-circle.expand{
+  transform:scale(1.22);
+}
+
+.breath-circle.shrink{
+  transform:scale(.82);
+}
+
+.breath-text{
+  font-size:20px;
+  font-weight:900;
+}
+
+.focus-dot{
+  width:25px;
+  height:25px;
+  background:#fff;
+  border-radius:50%;
+  margin:30px auto;
+  animation:focusPulse 2s infinite ease-in-out;
+}
+
+@keyframes focusPulse{
+  0%,100%{transform:scale(.75);opacity:.65}
+  50%{transform:scale(1.2);opacity:1}
+}
+
+.result{
+  text-align:center;
+  padding:25px 10px;
+}
+
+.result-icon{
+  font-size:52px;
+  margin-bottom:10px;
+}
+
+.result-title{
+  font-size:25px;
+  font-weight:900;
+}
+
+.result-score{
+  font-size:42px;
+  font-weight:900;
+  margin:10px;
+}
+
+.result-text{
+  color:#9da8c4;
   font-size:13px;
+  margin-bottom:18px;
 }
 
-@media(max-width:520px){
-  .grid{grid-template-columns:1fr}
-  h1{font-size:34px}
-  .memory-grid{grid-template-columns:repeat(4,1fr)}
+.hidden{
+  display:none!important;
+}
+
+@media(max-width:380px){
+  .game-card{padding:14px}
+  .game-icon{width:48px;height:48px;font-size:24px}
+  .reaction-area{height:270px}
 }
 </style>
 </head>
 
 <body>
+
 <div class="app">
 
 <header>
-  <div class="logo">🧠</div>
-  <h1>MindSprint</h1>
-  <div class="subtitle">Learn • Play • Remember</div>
+  <div class="logo">🧠 MindSprint</div>
+  <div class="tagline">Train • Focus • Reset</div>
 </header>
 
-<div id="home">
+<!-- HOME -->
+<section id="homeScreen" class="screen active">
+  <div class="home-title">Choose your brain challenge</div>
 
-<div class="card">
-  <div class="title">🎮 Brain Training</div>
-  <div class="grid">
-    <button onclick="startMemory()">🧠 Memory Match</button>
-    <button onclick="startNumber()">🔢 Number Memory</button>
-    <button onclick="startReaction()">⚡ Quick Reaction</button>
-    <button onclick="startQuiz('brain')">🎯 Brain Quiz</button>
+  <div class="game-card" onclick="openLevels('memory')">
+    <div class="game-icon">🧠</div>
+    <div class="game-info">
+      <div class="game-name">Memory Match</div>
+      <div class="game-desc">Remember positions and match the hidden pairs.</div>
+    </div>
+    <button class="play-btn">PLAY</button>
   </div>
-</div>
 
-<div class="card">
-  <div class="title">📚 Competitive Exams</div>
-
-  <div class="grid">
-    <button class="subject" onclick="startQuiz('ssc')">
-      <span>🇮🇳 SSC</span>
-      <small>Maths • Reasoning • GK • English</small>
-    </button>
-
-    <button class="subject" onclick="startQuiz('upsc')">
-      <span>🏛️ UPSC</span>
-      <small>History • Polity • Geography • Economy</small>
-    </button>
+  <div class="game-card" onclick="openLevels('reaction')">
+    <div class="game-icon">⚡</div>
+    <div class="game-info">
+      <div class="game-name">Quick Reaction</div>
+      <div class="game-desc">React fast, ignore fake signals and follow changing rules.</div>
+    </div>
+    <button class="play-btn">PLAY</button>
   </div>
-</div>
 
-<div class="card">
-  <div class="title">📖 Study Zone</div>
-  <div class="grid">
-    <button onclick="showTopics('ssc')">📘 SSC Topics</button>
-    <button onclick="showTopics('upsc')">📕 UPSC Topics</button>
-    <button onclick="showTopics('general')">🔬 General Knowledge</button>
-    <button onclick="showTopics('science')">🚀 Science & Technology</button>
+  <div class="game-card" onclick="openLevels('shift')">
+    <div class="game-icon">🔄</div>
+    <div class="game-info">
+      <div class="game-name">Mind Shift</div>
+      <div class="game-desc">Switch rules quickly and keep your thinking flexible.</div>
+    </div>
+    <button class="play-btn">PLAY</button>
   </div>
-</div>
 
-<div class="card">
-  <div class="title">📊 Your Progress</div>
-  <div class="stat">
-    <span>🏆 Total Score</span>
-    <b id="score">0</b>
+  <div class="game-card" onclick="openLevels('logic')">
+    <div class="game-icon">🧩</div>
+    <div class="game-info">
+      <div class="game-name">Logic Lab</div>
+      <div class="game-desc">Solve patterns, sequences and reasoning challenges.</div>
+    </div>
+    <button class="play-btn">PLAY</button>
   </div>
-  <div class="stat">
-    <span>🔥 Games Played</span>
-    <b id="played">0</b>
+
+  <div class="game-card" onclick="openLevels('calm')">
+    <div class="game-icon">🌿</div>
+    <div class="game-info">
+      <div class="game-name">Mind Calm</div>
+      <div class="game-desc">Slow down, focus your attention and finish refreshed.</div>
+    </div>
+    <button class="play-btn">PLAY</button>
   </div>
-  <button class="primary" onclick="resetProgress()">Reset Progress</button>
-</div>
+</section>
 
-</div>
+<!-- LEVELS -->
+<section id="levelsScreen" class="screen">
+  <div class="topbar">
+    <button class="back" onclick="showScreen('homeScreen')">←</button>
+    <div class="top-title" id="levelsTitle">Game</div>
+  </div>
 
+  <div class="level-subtitle">
+    Choose any level. Levels are always open.
+  </div>
 
-<!-- TOPICS -->
-<div id="topics" class="hidden">
-<button class="back" onclick="goHome()">← Back</button>
-<div class="card">
-<h2 id="topicTitle" class="title"></h2>
-<div id="topicList"></div>
-</div>
-</div>
+  <div id="levelsList"></div>
+</section>
 
+<!-- GAME -->
+<section id="gameScreen" class="screen">
+  <div class="topbar">
+    <button class="back" onclick="backToLevels()">←</button>
+    <div class="top-title" id="gameTitle">Game</div>
+  </div>
 
-<!-- QUIZ -->
-<div id="quiz" class="hidden">
-<button class="back" onclick="goHome()">← Back</button>
+  <div class="game-head">
+    <div class="stat">
+      <span class="stat-label">Score</span>
+      <span class="stat-value" id="score">0</span>
+    </div>
+    <div class="stat">
+      <span class="stat-label">Level</span>
+      <span class="stat-value" id="level">1</span>
+    </div>
+    <div class="stat">
+      <span class="stat-label">Best</span>
+      <span class="stat-value" id="best">0</span>
+    </div>
+  </div>
 
-<div class="card">
-<h2 id="quizTitle" class="title">Quiz</h2>
+  <div class="progress">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
 
-<div class="progress">
-<div id="quizProgress"></div>
-</div>
+  <div class="panel" id="gameArea"></div>
+</section>
 
-<div id="question" class="question"></div>
-<div id="options"></div>
+<!-- RESULT -->
+<section id="resultScreen" class="screen">
+  <div class="result">
+    <div class="result-icon">🏆</div>
+    <div class="result-title" id="resultTitle">Level Complete!</div>
+    <div class="result-score" id="resultScore">0</div>
+    <div class="result-text" id="resultText"></div>
 
-<div class="center">
-<p id="quizMessage"></p>
-<button id="nextBtn" class="primary hidden" onclick="nextQuestion()">Next Question →</button>
-</div>
-</div>
-</div>
-
-
-<!-- MEMORY -->
-<div id="memoryGame" class="hidden">
-<button class="back" onclick="goHome()">← Back</button>
-
-<div class="card center">
-<h2 class="title">🧠 Memory Match</h2>
-<p>Find all matching pairs.</p>
-<div id="memoryGrid" class="memory-grid"></div>
-<p id="memoryMessage" style="margin-top:15px"></p>
-</div>
-</div>
-
-
-<!-- NUMBER -->
-<div id="numberGame" class="hidden">
-<button class="back" onclick="goHome()">← Back</button>
-
-<div class="card center">
-<h2 class="title">🔢 Number Memory</h2>
-<p>Remember the number and type it below.</p>
-
-<div id="numberDisplay" class="big">Ready?</div>
-
-<input id="numberInput"
-style="width:100%;padding:16px;border-radius:12px;border:0;font-size:20px;text-align:center"
-placeholder="Enter number"
-type="number">
-
-<button class="primary" style="width:100%;margin-top:12px"
-onclick="checkNumber()">Check Answer</button>
-
-<p id="numberMessage" style="margin-top:15px"></p>
-</div>
-</div>
-
-
-<!-- REACTION -->
-<div id="reactionGame" class="hidden">
-<button class="back" onclick="goHome()">← Back</button>
-
-<div class="card center">
-<h2 class="title">⚡ Quick Reaction</h2>
-<p>Wait for GREEN, then tap!</p>
-
-<button id="reactionButton"
-style="width:100%;height:220px;margin-top:20px;font-size:25px"
-onclick="reactionClick()">
-START
-</button>
-
-<p id="reactionMessage" style="margin-top:15px"></p>
-</div>
-</div>
-
-
-<footer>
-MindSprint • Learn smarter. Play sharper. Remember more.
-</footer>
+    <button class="big-btn" onclick="replayLevel()">PLAY AGAIN</button>
+    <button class="secondary-btn" onclick="backToLevels()">LEVELS</button>
+  </div>
+</section>
 
 </div>
 
 <script>
 /* =========================
-   PROGRESS
+   GLOBAL STATE
 ========================= */
 
-let score = Number(localStorage.getItem("mindScore") || 0);
-let played = Number(localStorage.getItem("mindPlayed") || 0);
+const games={
+  memory:{
+    name:"Memory Match",
+    icon:"🧠",
+    levels:["Easy","Easy+","Medium","Hard","Genius"]
+  },
+  reaction:{
+    name:"Quick Reaction",
+    icon:"⚡",
+    levels:["Easy","Easy+","Medium","Hard","Genius"]
+  },
+  shift:{
+    name:"Mind Shift",
+    icon:"🔄",
+    levels:["Easy","Easy+","Medium","Hard","Genius"]
+  },
+  logic:{
+    name:"Logic Lab",
+    icon:"🧩",
+    levels:["Easy","Easy+","Medium","Hard","Genius"]
+  },
+  calm:{
+    name:"Mind Calm",
+    icon:"🌿",
+    levels:["Easy","Easy+","Medium","Hard","Genius"]
+  }
+};
 
-function updateStats(){
+let currentGame="";
+let currentLevel=1;
+let score=0;
+let gameTimer=null;
+let gameData={};
+
+function showScreen(id){
+  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
+
+function openLevels(type){
+  currentGame=type;
+  document.getElementById("levelsTitle").textContent=
+    games[type].icon+" "+games[type].name;
+
+  const list=document.getElementById("levelsList");
+  list.innerHTML="";
+
+  games[type].levels.forEach((name,i)=>{
+    const n=i+1;
+
+    const details=[
+      "Warm-up challenge",
+      "Faster and sharper",
+      "More decisions",
+      "High pressure",
+      "Maximum challenge"
+    ];
+
+    list.innerHTML+=`
+      <div class="level-card">
+        <div class="level-number">${n}</div>
+        <div class="level-info">
+          <div class="level-name">Level ${n} • ${name}</div>
+          <div class="level-detail">${details[i]}</div>
+        </div>
+        <button class="level-btn" onclick="startGame('${type}',${n})">
+          OPEN
+        </button>
+      </div>
+    `;
+  });
+
+  showScreen("levelsScreen");
+}
+
+function startGame(type,level){
+  clearInterval(gameTimer);
+  currentGame=type;
+  currentLevel=level;
+  score=0;
+
+  document.getElementById("gameTitle").textContent=
+    games[type].icon+" "+games[type].name;
+
+  document.getElementById("level").textContent=level;
+  document.getElementById("score").textContent="0";
+  document.getElementById("best").textContent=getBest(type,level);
+  setProgress(0);
+
+  showScreen("gameScreen");
+
+  if(type==="memory") memoryGame();
+  if(type==="reaction") reactionGame();
+  if(type==="shift") shiftGame();
+  if(type==="logic") logicGame();
+  if(type==="calm") calmGame();
+}
+
+function backToLevels(){
+  clearInterval(gameTimer);
+  openLevels(currentGame);
+}
+
+function setProgress(value){
+  document.getElementById("progressBar").style.width=
+    Math.max(0,Math.min(100,value))+"%";
+}
+
+function updateScore(value){
+  score=Math.max(0,Math.round(value));
   document.getElementById("score").textContent=score;
-  document.getElementById("played").textContent=played;
-}
-updateStats();
-
-function addScore(points){
-  score += points;
-  localStorage.setItem("mindScore",score);
-  updateStats();
 }
 
-function gamePlayed(){
-  played++;
-  localStorage.setItem("mindPlayed",played);
-  updateStats();
+function getBest(type,level){
+  return Number(localStorage.getItem(
+    "mindsprint_"+type+"_level_"+level
+  ))||0;
 }
 
-function resetProgress(){
-  if(confirm("Reset all progress?")){
-    score=0;
-    played=0;
-    localStorage.removeItem("mindScore");
-    localStorage.removeItem("mindPlayed");
-    updateStats();
-  }
-}
+function saveBest(){
+  const key="mindsprint_"+currentGame+"_level_"+currentLevel;
+  const old=getBest(currentGame,currentLevel);
 
-
-/* =========================
-   NAVIGATION
-========================= */
-
-const pages=["home","topics","quiz","memoryGame","numberGame","reactionGame"];
-
-function hideAll(){
-  pages.forEach(x=>document.getElementById(x).classList.add("hidden"));
-}
-
-function goHome(){
-  hideAll();
-  document.getElementById("home").classList.remove("hidden");
-}
-
-function showPage(id){
-  hideAll();
-  document.getElementById(id).classList.remove("hidden");
-}
-
-
-/* =========================
-   TOPICS
-========================= */
-
-const topics={
-ssc:[
-["➗ Mathematics","Percentage, Profit & Loss, Ratio, Average, Time & Work"],
-["🧩 Reasoning","Analogy, Series, Coding-Decoding, Blood Relations"],
-["🌍 General Awareness","History, Geography, Polity, Economics"],
-["🔤 English","Grammar, Vocabulary, Synonyms, Antonyms"]
-],
-
-upsc:[
-["🏛️ History","Ancient, Medieval, Modern India & World History"],
-["⚖️ Polity","Constitution, Parliament, Judiciary, Governance"],
-["🌏 Geography","Physical, Indian & World Geography"],
-["💰 Economy","Indian Economy, Banking, Budget & Development"],
-["🔬 Science","Physics, Chemistry, Biology & Technology"],
-["📰 Current Affairs","National & International events"]
-],
-
-general:[
-["🇮🇳 India","States, Capitals, Rivers, Monuments & Culture"],
-["🌍 World","Countries, Capitals, Continents & Organizations"],
-["🏆 Sports","Major sports, tournaments & achievements"],
-["📜 Important Days","National & International important days"]
-],
-
-science:[
-["🚀 Space","Planets, ISRO, Satellites & Missions"],
-["⚛️ Physics","Motion, Force, Energy, Light & Electricity"],
-["🧪 Chemistry","Atoms, Elements, Reactions & Materials"],
-["🧬 Biology","Human body, Cells, Plants & Animals"]
-]
-};
-
-function showTopics(type){
-  showPage("topics");
-
-  let names={
-    ssc:"📘 SSC Study Zone",
-    upsc:"📕 UPSC Study Zone",
-    general:"🌍 General Knowledge",
-    science:"🔬 Science & Technology"
-  };
-
-  document.getElementById("topicTitle").textContent=names[type];
-
-  let html="";
-  topics[type].forEach(t=>{
-    html+=`
-    <div style="background:#1b2948;padding:17px;border-radius:15px;margin:10px 0">
-      <b style="font-size:18px">${t[0]}</b>
-      <p style="color:#aeb8d3;margin-top:7px">${t[1]}</p>
-    </div>`;
-  });
-
-  document.getElementById("topicList").innerHTML=html;
-}
-
-
-/* =========================
-   QUIZ DATA
-========================= */
-
-const quizzes={
-
-brain:[
-{
-q:"Which number comes next: 2, 4, 8, 16, ?",
-a:["20","24","32","36"],
-c:2
-},
-{
-q:"Which planet is known as the Red Planet?",
-a:["Earth","Mars","Jupiter","Venus"],
-c:1
-},
-{
-q:"How many sides does a hexagon have?",
-a:["5","6","7","8"],
-c:1
-},
-{
-q:"Which organ pumps blood through the body?",
-a:["Lungs","Brain","Heart","Kidney"],
-c:2
-}
-],
-
-ssc:[
-{
-q:"What is 25% of 200?",
-a:["25","40","50","75"],
-c:2
-},
-{
-q:"If 5 × 6 = 30, what is 30 ÷ 5?",
-a:["4","5","6","7"],
-c:2
-},
-{
-q:"Who is known as the Father of the Indian Constitution?",
-a:["Mahatma Gandhi","B. R. Ambedkar","Jawaharlal Nehru","Sardar Patel"],
-c:1
-},
-{
-q:"Opposite of 'Ancient' is:",
-a:["Old","Modern","Historic","Past"],
-c:1
-},
-{
-q:"Which is the largest planet?",
-a:["Earth","Mars","Saturn","Jupiter"],
-c:3
-},
-{
-q:"2, 6, 12, 20, ?",
-a:["24","28","30","32"],
-c:1
-}
-],
-
-upsc:[
-{
-q:"The Constitution of India came into force on:",
-a:["15 Aug 1947","26 Jan 1950","26 Nov 1949","2 Oct 1950"],
-c:1
-},
-{
-q:"Who was the first Governor-General of independent India?",
-a:["Lord Mountbatten","Rajendra Prasad","C. Rajagopalachari","Nehru"],
-c:0
-},
-{
-q:"Which is the longest river in India?",
-a:["Yamuna","Ganga","Godavari","Narmada"],
-c:1
-},
-{
-q:"The Reserve Bank of India is India's:",
-a:["Central bank","Commercial bank","Private bank","Cooperative bank"],
-c:0
-},
-{
-q:"Fundamental Rights are contained in which part of the Constitution?",
-a:["Part I","Part II","Part III","Part IV"],
-c:2
-},
-{
-q:"Which gas is most abundant in Earth's atmosphere?",
-a:["Oxygen","Nitrogen","Carbon dioxide","Hydrogen"],
-c:1
-}
-]
-};
-
-let quizData=[];
-let quizIndex=0;
-let quizScore=0;
-let quizType="";
-
-
-function startQuiz(type){
-  quizType=type;
-  quizData=[...quizzes[type]];
-  quizIndex=0;
-  quizScore=0;
-  showPage("quiz");
-
-  let titles={
-    brain:"🎯 Brain Quiz",
-    ssc:"🇮🇳 SSC Practice Quiz",
-    upsc:"🏛️ UPSC Practice Quiz"
-  };
-
-  document.getElementById("quizTitle").textContent=titles[type];
-  showQuestion();
-}
-
-
-function showQuestion(){
-  let q=quizData[quizIndex];
-
-  document.getElementById("quizProgress").style.width=
-    ((quizIndex)/quizData.length*100)+"%";
-
-  document.getElementById("question").innerHTML=
-    `<b>Q${quizIndex+1}. ${q.q}</b>`;
-
-  document.getElementById("quizMessage").textContent="";
-  document.getElementById("nextBtn").classList.add("hidden");
-
-  let html="";
-  q.a.forEach((answer,i)=>{
-    html+=`
-      <button class="option" onclick="answerQuiz(${i},this)">
-        ${String.fromCharCode(65+i)}. ${answer}
-      </button>`;
-  });
-
-  document.getElementById("options").innerHTML=html;
-}
-
-
-function answerQuiz(index,btn){
-  let q=quizData[quizIndex];
-
-  document.querySelectorAll(".option").forEach(b=>b.disabled=true);
-
-  if(index===q.c){
-    btn.classList.add("correct");
-    quizScore++;
-    addScore(10);
-    document.getElementById("quizMessage").textContent="✅ Correct!";
-  }else{
-    btn.classList.add("wrong");
-    document.querySelectorAll(".option")[q.c].classList.add("correct");
-    document.getElementById("quizMessage").textContent="❌ Correct answer highlighted.";
+  if(score>old){
+    localStorage.setItem(key,score);
+    return true;
   }
 
-  document.getElementById("nextBtn").classList.remove("hidden");
+  return false;
 }
 
+function finishGame(title,text){
+  clearInterval(gameTimer);
 
-function nextQuestion(){
-  quizIndex++;
+  const newBest=saveBest();
 
-  if(quizIndex>=quizData.length){
-    document.getElementById("quizProgress").style.width="100%";
-    document.getElementById("question").innerHTML=
-      `<div class="center">🏆 Quiz Complete!<br><br>
-      Score: <b>${quizScore}/${quizData.length}</b></div>`;
+  document.getElementById("resultTitle").textContent=
+    newBest ? "New Best! 🏆" : title;
 
-    document.getElementById("options").innerHTML="";
-    document.getElementById("nextBtn").textContent="Back Home";
-    document.getElementById("nextBtn").onclick=goHome;
-    gamePlayed();
-  }else{
-    showQuestion();
-  }
+  document.getElementById("resultScore").textContent=score;
+
+  document.getElementById("resultText").textContent=
+    newBest
+      ? "Great run! You created a new personal best."
+      : text;
+
+  showScreen("resultScreen");
 }
 
+function replayLevel(){
+  startGame(currentGame,currentLevel);
+}
 
 /* =========================
    MEMORY MATCH
 ========================= */
 
-let firstCard=null;
-let secondCard=null;
-let lock=false;
-let matches=0;
+function memoryGame(){
 
-function startMemory(){
-  showPage("memoryGame");
+  const level=currentLevel;
 
-  const symbols=["🍎","🚀","🧠","⭐","🎯","🔥","🎵","🌍"];
-  let cards=[...symbols,...symbols];
+  let pairs;
+  let revealTime;
+  let mistakesAllowed;
+
+  if(level===1){
+    pairs=3;
+    revealTime=1800;
+    mistakesAllowed=8;
+  }else if(level===2){
+    pairs=4;
+    revealTime=1600;
+    mistakesAllowed=7;
+  }else if(level===3){
+    pairs=6;
+    revealTime=1300;
+    mistakesAllowed=6;
+  }else if(level===4){
+    pairs=8;
+    revealTime=1000;
+    mistakesAllowed=5;
+  }else{
+    pairs=10;
+    revealTime=750;
+    mistakesAllowed=4;
+  }
+
+  const emojis=["🍎","🚀","🐼","🌟","🎯","🦊","🍕","⚽","🎸","🌈"];
+
+  let cards=[];
+  for(let i=0;i<pairs;i++){
+    cards.push(emojis[i],emojis[i]);
+  }
+
   cards.sort(()=>Math.random()-.5);
 
-  firstCard=null;
-  secondCard=null;
-  lock=false;
-  matches=0;
+  let first=null;
+  let second=null;
+  let locked=true;
+  let matched=0;
+  let mistakes=0;
 
-  let html="";
-  cards.forEach((s,i)=>{
-    html+=`
-      <button class="memory" id="m${i}" onclick="flipMemory(${i},'${s}')">?</button>`;
-  });
+  const area=document.getElementById("gameArea");
 
-  document.getElementById("memoryGrid").innerHTML=html;
-  document.getElementById("memoryMessage").textContent="Find all pairs!";
-}
+  area.innerHTML=`
+    <div class="instruction">
+      Memorize the cards, then find all matching pairs.
+      <br>Every level becomes faster and larger.
+    </div>
 
+    <div class="memory-grid"
+      id="memoryGrid"
+      style="grid-template-columns:repeat(${pairs<=4?4:5},1fr)">
+    </div>
 
-function flipMemory(i,s){
-  if(lock)return;
+    <div class="message" id="memoryMessage">
+      Memorize...
+    </div>
+  `;
 
-  let card=document.getElementById("m"+i);
-  if(card.classList.contains("done")||card===firstCard)return;
+  const grid=document.getElementById("memoryGrid");
 
-  card.textContent=s;
-  card.classList.add("open");
+  cards.forEach((emoji,index)=>{
+    const card=document.createElement("div");
 
-  if(!firstCard){
-    firstCard=card;
-    firstCard.dataset.symbol=s;
-  }else{
-    secondCard=card;
-    secondCard.dataset.symbol=s;
-    lock=true;
+    card.className="memory-card show";
+    card.dataset.value=emoji;
+    card.dataset.index=index;
+    card.textContent=emoji;
 
-    setTimeout(()=>{
-      if(firstCard.dataset.symbol===secondCard.dataset.symbol){
-        firstCard.classList.add("done");
-        secondCard.classList.add("done");
-        matches++;
-        addScore(20);
+    card.onclick=()=>{
+      if(locked || card.classList.contains("matched")) return;
+      if(card===first) return;
 
-        if(matches===8){
-          document.getElementById("memoryMessage").textContent=
-            "🎉 Excellent! All pairs matched!";
-          gamePlayed();
+      card.classList.add("show");
+      card.textContent=emoji;
+
+      if(!first){
+        first=card;
+        return;
+      }
+
+      second=card;
+      locked=true;
+
+      if(first.dataset.value===second.dataset.value){
+
+        first.classList.add("matched");
+        second.classList.add("matched");
+
+        matched++;
+        updateScore(score+100);
+
+        first=null;
+        second=null;
+        locked=false;
+
+        setProgress((matched/pairs)*100);
+
+        if(matched===pairs){
+          setTimeout(()=>{
+            finishGame(
+              "Level Complete!",
+              "Excellent memory work."
+            );
+          },450);
         }
 
       }else{
-        firstCard.textContent="?";
-        secondCard.textContent="?";
-        firstCard.classList.remove("open");
-        secondCard.classList.remove("open");
+
+        mistakes++;
+
+        setTimeout(()=>{
+          first.classList.remove("show");
+          second.classList.remove("show");
+          first.textContent="";
+          second.textContent="";
+
+          first=null;
+          second=null;
+          locked=false;
+
+          updateScore(Math.max(0,score-15));
+
+          document.getElementById("memoryMessage").textContent=
+            mistakesAllowed-mistakes+
+            " mistakes remaining";
+
+          if(mistakes>=mistakesAllowed){
+            finishGame(
+              "Good Try!",
+              "Memory improves with practice."
+            );
+          }
+
+        },550);
       }
+    };
 
-      firstCard=null;
-      secondCard=null;
-      lock=false;
-    },600);
-  }
-}
-
-
-/* =========================
-   NUMBER MEMORY
-========================= */
-
-let secretNumber="";
-
-function startNumber(){
-  showPage("numberGame");
-
-  secretNumber=Math.floor(10000+Math.random()*90000).toString();
-
-  document.getElementById("numberDisplay").textContent=secretNumber;
-  document.getElementById("numberInput").value="";
-  document.getElementById("numberMessage").textContent="Remember it!";
+    grid.appendChild(card);
+  });
 
   setTimeout(()=>{
-    document.getElementById("numberDisplay").textContent="???";
-    document.getElementById("numberMessage").textContent=
-      "Now enter the number.";
-  },2500);
+    document.querySelectorAll(".memory-card").forEach(card=>{
+      card.classList.remove("show");
+      card.textContent="";
+    });
+
+    locked=false;
+    document.getElementById("memoryMessage").textContent=
+      "Find the matching pairs!";
+  },revealTime);
 }
-
-function checkNumber(){
-  let input=document.getElementById("numberInput").value;
-
-  if(input===secretNumber){
-    document.getElementById("numberMessage").textContent=
-      "🎉 Perfect! +50 points";
-    addScore(50);
-  }else{
-    document.getElementById("numberMessage").textContent=
-      "❌ Not quite. Number was "+secretNumber;
-  }
-
-  gamePlayed();
-}
-
 
 /* =========================
-   REACTION GAME
+   QUICK REACTION
 ========================= */
 
-let reactionReady=false;
-let reactionStart=0;
-let reactionTimer=null;
+function reactionGame(){
 
-function startReaction(){
-  showPage("reactionGame");
+  const level=currentLevel;
 
-  reactionReady=false;
+  const rounds=[8,10,12,14,16][level-1];
+  const targetTime=[1500,1250,1050,850,650][level-1];
 
-  let b=document.getElementById("reactionButton");
-  b.textContent="WAIT...";
-  b.style.background="#a93c55";
+  let round=0;
+  let hits=0;
+  let waiting=false;
+  let targetType="tap";
 
-  let delay=1500+Math.random()*3000;
+  const area=document.getElementById("gameArea");
 
-  reactionTimer=setTimeout(()=>{
-    reactionReady=true;
-    reactionStart=Date.now();
-    b.textContent="TAP NOW!";
-    b.style.background="#137d67";
-  },delay);
+  area.innerHTML=`
+    <div class="instruction" id="reactionInstruction">
+      Wait for the correct signal. Tap only when you should.
+    </div>
 
-  document.getElementById("reactionMessage").textContent="";
-}
+    <div class="reaction-area" id="reactionArea">
+      <div class="reaction-target" id="reactionTarget">
+        READY
+      </div>
+    </div>
 
-function reactionClick(){
-  let b=document.getElementById("reactionButton");
+    <div class="message" id="reactionMessage">
+      Get ready...
+    </div>
+  `;
 
-  if(!reactionReady){
-    clearTimeout(reactionTimer);
-    b.textContent="Too Early! Try Again";
-    b.style.background="#a93c55";
-    document.getElementById("reactionMessage").textContent=
-      "Wait for green.";
-    return;
+  const box=document.getElementById("reactionArea");
+  const target=document.getElementById("reactionTarget");
+
+  box.onclick=(e)=>{
+    if(e.target!==box && e.target!==target) return;
+
+    if(!waiting){
+      updateScore(Math.max(0,score-25));
+
+      document.getElementById("reactionMessage").textContent=
+        "False signal! Wait for the target.";
+
+      return;
+    }
+
+    const now=Date.now();
+    const reaction=now-gameData.startTime;
+
+    if(gameData.shouldTap){
+
+      hits++;
+
+      let points=120-Math.floor(reaction/10);
+      points=Math.max(30,points);
+
+      updateScore(score+points);
+
+      document.getElementById("reactionMessage").textContent=
+        reaction+" ms • Great!";
+
+    }else{
+
+      updateScore(Math.max(0,score-35));
+
+      document.getElementById("reactionMessage").textContent=
+        "Trap! This signal was NOT the target.";
+    }
+
+    waiting=false;
+    round++;
+
+    setProgress((round/rounds)*100);
+
+    if(round>=rounds){
+      setTimeout(()=>{
+        finishGame(
+          "Reaction Complete!",
+          hits+" correct reactions out of "+rounds+"."
+        );
+      },500);
+    }else{
+      setTimeout(nextReaction,300);
+    }
+  };
+
+  function nextReaction(){
+
+    waiting=false;
+
+    target.className="reaction-target";
+
+    const fake=Math.random()<(
+      level===1 ? .15 :
+      level===2 ? .22 :
+      level===3 ? .28 :
+      level===4 ? .34 : .40
+    );
+
+    const shape=Math.floor(Math.random()*3);
+
+    if(shape===1){
+      target.classList.add("shape-square");
+    }else if(shape===2){
+      target.classList.add("shape-triangle");
+    }
+
+    targetType=fake?"fake":"real";
+
+    const delay=350+Math.random()*(
+      level===5?650:1000
+    );
+
+    target.textContent="WAIT";
+
+    setTimeout(()=>{
+
+      target.classList.add(fake?"bad":"good");
+
+      if(shape===2){
+        target.textContent="";
+      }else{
+        target.textContent=fake?"✕":"TAP";
+      }
+
+      waiting=true;
+      gameData.startTime=Date.now();
+      gameData.shouldTap=!fake;
+
+      setTimeout(()=>{
+
+        if(waiting){
+
+          if(!fake){
+            updateScore(Math.max(0,score-30));
+            document.getElementById("reactionMessage").textContent=
+              "Too slow!";
+          }else{
+            updateScore(score+25);
+            document.getElementById("reactionMessage").textContent=
+              "Perfect restraint!";
+          }
+
+          waiting=false;
+          round++;
+
+          setProgress((round/rounds)*100);
+
+          if(round>=rounds){
+            finishGame(
+              "Reaction Complete!",
+              "You completed all reaction rounds."
+            );
+          }else{
+            nextReaction();
+          }
+        }
+
+      },targetTime);
+
+    },delay);
   }
 
-  let time=Date.now()-reactionStart;
-  reactionReady=false;
-
-  let points=Math.max(10,100-Math.floor(time/5));
-  addScore(points);
-  gamePlayed();
-
-  b.textContent="⚡ "+time+" ms";
-  b.style.background="#7045df";
-
-  document.getElementById("reactionMessage").textContent=
-    "Great reaction! +" + points + " points";
-
-  setTimeout(startReaction,1500);
+  nextReaction();
 }
+
+/* =========================
+   MIND SHIFT
+========================= */
+
+function shiftGame(){
+
+  const level=currentLevel;
+
+  const rounds=[8,10,12,14,16][level-1];
+
+  let round=0;
+  let correct=0;
+  let rule="COLOR";
+
+  const colors=[
+    {name:"RED",symbol:"🔴"},
+    {name:"BLUE",symbol:"🔵"},
+    {name:"GREEN",symbol:"🟢"},
+    {name:"YELLOW",symbol:"🟡"}
+  ];
+
+  const area=document.getElementById("gameArea");
+
+  area.innerHTML=`
+    <div class="instruction" id="shiftInstruction">
+      Follow the current rule.
+    </div>
+
+    <div class="shift-target" id="shiftTarget">?</div>
+
+    <div class="choice-row" id="shiftChoices"></div>
+
+    <div class="message" id="shiftMessage">
+      Rule changing keeps your brain alert.
+    </div>
+  `;
+
+  const target=document.getElementById("shiftTarget");
+  const choices=document.getElementById("shiftChoices");
+  const instruction=document.getElementById("shiftInstruction");
+
+  function newRound(){
+
+    const useShape=level>=3 && Math.random()<.5;
+    const useNumber=level>=4 && Math.random()<.35;
+
+    if(useShape){
+      rule="SHAPE";
+    }else if(useNumber){
+      rule="NUMBER";
+    }else{
+      rule="COLOR";
+    }
+
+    const c=colors[Math.floor(Math.random()*colors.length)];
+
+    let value=c.name;
+    let display=c.symbol;
+
+    if(rule==="SHAPE"){
+      const shapes=["●","■","▲","◆"];
+      display=shapes[Math.floor(Math.random()*shapes.length)];
+      value=display;
+    }
+
+    if(rule==="NUMBER"){
+      value=String(1+Math.floor(Math.random()*4));
+      display=value;
+    }
+
+    target.textContent=display;
+    target.style.background=
+      rule==="COLOR" ? c.symbol==="🔴" ? "#7d3030" :
+      c.symbol==="🔵" ? "#304d85" :
+      c.symbol==="🟢" ? "#306344" : "#76652d"
+      : "#263251";
+
+    instruction.innerHTML=
+      "<b>Rule: "+rule+"</b><br>Tap the matching answer.";
+
+    let options=[];
+
+    if(rule==="COLOR"){
+      options=colors.map(x=>x.name);
+    }else if(rule==="SHAPE"){
+      options=["●","■","▲","◆"];
+    }else{
+      options=["1","2","3","4"];
+    }
+
+    options.sort(()=>Math.random()-.5);
+
+    choices.innerHTML="";
+
+    options.forEach(option=>{
+      const btn=document.createElement("button");
+      btn.className="choice";
+      btn.textContent=option;
+
+      btn.onclick=()=>{
+
+        const correctAnswer=
+          rule==="COLOR" ? value :
+          rule==="SHAPE" ? value :
+          value;
+
+        if(option===correctAnswer){
+          correct++;
+          updateScore(score+90+level*10);
+          document.getElementById("shiftMessage").textContent=
+            "Correct • stay flexible!";
+        }else{
+          updateScore(Math.max(0,score-25));
+          document.getElementById("shiftMessage").textContent=
+            "Wrong rule — switch your thinking.";
+        }
+
+        round++;
+        setProgress((round/rounds)*100);
+
+        if(round>=rounds){
+          setTimeout(()=>{
+            finishGame(
+              "Mind Shift Complete!",
+              correct+" correct answers out of "+rounds+"."
+            );
+          },350);
+        }else{
+          setTimeout(newRound,220);
+        }
+      };
+
+      choices.appendChild(btn);
+    });
+  }
+
+  newRound();
+}
+
+/* =========================
+   LOGIC LAB
+========================= */
+
+function logicGame(){
+
+  const level=currentLevel;
+
+  const total=[6,7,8,9,10][level-1];
+
+  let round=0;
+
+  const area=document.getElementById("gameArea");
+
+  area.innerHTML=`
+    <div class="instruction">
+      Find the answer using logic, not guessing.
+    </div>
+
+    <div class="question" id="logicQuestion"></div>
+
+    <div class="options" id="logicOptions"></div>
+
+    <div class="message" id="logicMessage">
+      Think carefully.
+    </div>
+  `;
+
+  const question=document.getElementById("logicQuestion");
+  const options=document.getElementById("logicOptions");
+
+  function makePuzzle(){
+
+    let answer;
+    let choices=[];
+    let text="";
+
+    const type=(round+level)%4;
+
+    if(type===0){
+
+      const start=2+level;
+      const step=level+1;
+
+      const nums=[
+        start,
+        start+step,
+        start+step*2,
+        start+step*3,
+        "?"
+      ];
+
+      answer=start+step*4;
+
+      text=nums.join(" , ");
+
+      choices=[
+        answer,
+        answer+step,
+        answer-step,
+        answer+2
+      ];
+
+    }else if(type===1){
+
+      const start=3+level;
+      const a=start*1;
+      const b=start*2;
+      const c=start*3;
+
+      answer=start*4;
+
+      text=
+        a+" → "+b+" → "+c+" → ?";
+
+      choices=[
+        answer,
+        answer+level,
+        answer-1,
+        answer+4
+      ];
+
+    }else if(type===2){
+
+      const n=5+level;
+
+      answer=n*2+1;
+
+      text=
+        "If "+n+" becomes "+(n*2)+
+        ", what does "+(n+1)+" become?";
+
+      choices=[
+        answer,
+        answer+2,
+        answer-2,
+        n+2
+      ];
+
+    }else{
+
+      const base=level+2;
+
+      answer=base+base*2;
+
+      text=
+        "★ = "+base+
+        "<br>★★ = "+(base*2)+
+        "<br>★★★ = ?";
+
+      choices=[
+        answer,
+        answer+base,
+        answer-base,
+        base*3+2
+      ];
+    }
+
+    choices.sort(()=>Math.random()-.5);
+
+    question.innerHTML=text;
+    options.innerHTML="";
+
+    choices.forEach(choice=>{
+
+      const btn=document.createElement("button");
+      btn.className="option";
+      btn.textContent=choice;
+
+      btn.onclick=()=>{
+
+        if(Number(choice)===Number(answer)){
+          updateScore(score+120+level*15);
+          document.getElementById("logicMessage").textContent=
+            "Correct reasoning! 🧠";
+        }else{
+          updateScore(Math.max(0,score-30));
+          document.getElementById("logicMessage").textContent=
+            "Not quite. Look for the rule.";
+        }
+
+        round++;
+        setProgress((round/total)*100);
+
+        if(round>=total){
+          setTimeout(()=>{
+            finishGame(
+              "Logic Lab Complete!",
+              "You completed "+total+" reasoning puzzles."
+            );
+          },400);
+        }else{
+          setTimeout(makePuzzle,250);
+        }
+      };
+
+      options.appendChild(btn);
+    });
+  }
+
+  makePuzzle();
+}
+
+/* =========================
+   MIND CALM
+========================= */
+
+function calmGame(){
+
+  const level=currentLevel;
+
+  /*
+    Sessions are short and finite.
+    They become gradually longer and more focused.
+  */
+
+  const durations=[30,45,60,75,90][level-1];
+
+  let remaining=durations;
+  let breaths=0;
+  let phaseIndex=0;
+
+  const phases=[
+    {name:"Breathe in",time:4},
+    {name:"Hold",time:2},
+    {name:"Breathe out",time:5}
+  ];
+
+  const area=document.getElementById("gameArea");
+
+  area.innerHTML=`
+    <div class="calm-box">
+
+      <div class="instruction">
+        Follow the circle gently.<br>
+        No rush. Keep your attention here.
+      </div>
+
+      <div class="breath-circle" id="breathCircle">
+        <div class="breath-text" id="breathText">
+          Ready
+        </div>
+      </div>
+
+      <div class="focus-dot"></div>
+
+      <div class="message" id="calmMessage">
+        ${durations} second focus session
+      </div>
+
+      <div class="center">
+        <button class="big-btn" id="calmStart">
+          START
+        </button>
+      </div>
+
+    </div>
+  `;
+
+  const circle=document.getElementById("breathCircle");
+  const text=document.getElementById("breathText");
+  const message=document.getElementById("calmMessage");
+  const start=document.getElementById("calmStart");
+
+  let running=false;
+  let phaseSeconds=0;
+
+  start.onclick=()=>{
+
+    if(running) return;
+
+    running=true;
+    start.classList.add("hidden");
+
+    text.textContent="Breathe in";
+    phaseSeconds=phases[0].time;
+    phaseIndex=0;
+
+    circle.classList.add("expand");
+
+    gameTimer=setInterval(()=>{
+
+      remaining--;
+
+      const progress=
+        ((durations-remaining)/durations)*100;
+
+      setProgress(progress);
+
+      phaseSeconds--;
+
+      if(remaining<=0){
+
+        clearInterval(gameTimer);
+        running=false;
+
+        updateScore(500+level*100);
+
+        text.textContent="Complete 🌿";
+        message.textContent=
+          "Session complete. Take one normal breath.";
+
+        setProgress(100);
+
+        setTimeout(()=>{
+          finishGame(
+            "Mind Calm Complete!",
+            "You completed your focus reset."
+          );
+        },1000);
+
+        return;
+      }
+
+      if(phaseSeconds<=0){
+
+        phaseIndex=(phaseIndex+1)%phases.length;
+        phaseSeconds=phases[phaseIndex].time;
+
+        const phase=phases[phaseIndex];
+
+        text.textContent=phase.name;
+
+        if(phaseIndex===0){
+          circle.classList.remove("shrink");
+          circle.classList.add("expand");
+          breaths++;
+        }else if(phaseIndex===2){
+          circle.classList.remove("expand");
+          circle.classList.add("shrink");
+        }else{
+          circle.classList.remove("expand","shrink");
+        }
+      }
+
+      message.textContent=
+        "Stay with the breath • "+remaining+"s";
+
+    },1000);
+  };
+}
+
+/* =========================
+   INITIALIZE
+========================= */
+
+showScreen("homeScreen");
 </script>
 
 </body>
