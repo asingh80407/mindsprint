@@ -1,2709 +1,1457 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#07111f">
+<meta name="description" content="MindSprint - Brain Training Games">
 <title>MindSprint</title>
 
 <style>
-*{
-box-sizing:border-box;
--webkit-tap-highlight-color:transparent
+*{box-sizing:border-box}
+:root{
+  --bg:#07111f;
+  --panel:#0d1b2d;
+  --panel2:#12243a;
+  --text:#f5f8ff;
+  --muted:#8fa4bd;
+  --accent:#6ee7ff;
+  --green:#58e39b;
+  --yellow:#ffd166;
+  --red:#ff6b7a;
+  --line:#203751;
 }
-
-html,body{
-margin:0;
-background:#07111f;
-color:#fff;
-font-family:Arial,sans-serif
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:radial-gradient(circle at top,#132b45 0,#07111f 48%,#040a12 100%);
+  color:var(--text);
+  min-height:100vh;
 }
-
-button,input{
-font:inherit
+button{
+  font:inherit;
+  color:inherit;
+  border:0;
+  cursor:pointer;
 }
-
 .app{
-max-width:560px;
-min-height:100vh;
-margin:auto;
-padding-bottom:28px
+  width:min(720px,100%);
+  margin:auto;
+  min-height:100vh;
+  padding:18px 14px 40px;
 }
-
 header{
-text-align:center;
-padding:22px 15px 10px
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:18px;
 }
-
 .logo{
-font-size:31px;
-font-weight:900
+  font-size:25px;
+  font-weight:900;
 }
-
-.tag,.muted{
-color:#94a3b8
+.logo span{color:var(--accent)}
+.headerSmall{
+  color:var(--muted);
+  font-size:12px;
 }
-
-.tag{
-margin-top:4px
+.screen{display:none}
+.screen.active{display:block}
+.hero{
+  background:linear-gradient(145deg,#10263d,#0b1728);
+  border:1px solid var(--line);
+  border-radius:24px;
+  padding:22px;
+  margin-bottom:18px;
+  box-shadow:0 14px 40px #0004;
 }
-
-.screen{
-display:none;
-padding:10px 16px
+.hero h1{
+  margin:0 0 8px;
+  font-size:30px;
 }
-
-.screen.on{
-display:block
+.hero p{
+  margin:0;
+  color:var(--muted);
+  line-height:1.5;
 }
-
-.section{
-font-size:12px;
-color:#64748b;
-font-weight:900;
-text-transform:uppercase;
-margin:14px 3px 9px
+.gameGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
 }
-
-.card{
-background:#0d1b2d;
-border:1px solid #1d2d43;
-border-radius:21px;
-padding:16px;
-margin-bottom:12px
+.gameCard{
+  background:linear-gradient(145deg,#10243a,#0b1728);
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:17px;
+  min-height:180px;
+  text-align:left;
+  transition:.18s;
 }
-
-.game{
-display:flex;
-align-items:center;
-gap:13px
+.gameCard:active{transform:scale(.97)}
+.gameIcon{
+  width:54px;
+  height:54px;
+  display:grid;
+  place-items:center;
+  border-radius:16px;
+  background:#172f49;
+  font-size:28px;
+  margin-bottom:12px;
 }
-
-.game:active,
-.level:active,
-.btn:active{
-transform:scale(.98)
+.gameCard h3{margin:0 0 7px}
+.gameCard p{
+  margin:0;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.4;
 }
-
-.game .ico{
-width:56px;
-height:56px;
-border-radius:17px;
-background:#14263d;
-display:grid;
-place-items:center;
-font-size:29px
+.gameTag{
+  display:inline-block;
+  margin-top:12px;
+  font-size:11px;
+  color:var(--accent);
 }
-
-.info{
-flex:1
+.topbar{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:16px;
 }
-
-.name{
-font-size:18px;
-font-weight:900
-}
-
-.desc{
-font-size:12px;
-line-height:1.4;
-margin-top:5px;
-color:#94a3b8
-}
-
-.arrow{
-font-size:25px;
-color:#64748b
-}
-
-.top{
-display:flex;
-gap:10px;
-align-items:center;
-margin:8px 0 16px
-}
-
 .back{
-width:42px;
-height:42px;
-border:0;
-border-radius:14px;
-background:#14263d;
-color:#fff;
-font-size:22px
+  background:#14273d;
+  border:1px solid var(--line);
+  border-radius:13px;
+  padding:10px 13px;
 }
-
-.title{
-font-size:22px;
-font-weight:900
+.titleBox{flex:1}
+.titleBox h2{margin:0;font-size:21px}
+.titleBox small{color:var(--muted)}
+.levelMap{
+  background:#091522;
+  border:1px solid var(--line);
+  border-radius:24px;
+  padding:18px 12px;
+  margin-top:10px;
 }
-
-.sub{
-font-size:12px;
-color:#94a3b8;
-margin-top:3px
+.mapTitle{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:16px;
 }
-
-.notice{
-background:#0b192b;
-border-radius:15px;
-padding:12px;
-color:#94a3b8;
-font-size:11px;
-line-height:1.5;
-margin-bottom:12px
+.mapTitle strong{font-size:17px}
+.mapTitle span{color:var(--muted);font-size:12px}
+.levelList{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:8px;
 }
-
-.btn{
-border:0;
-border-radius:14px;
-padding:13px 15px;
-font-weight:900;
-color:#fff;
-background:#2563eb
+.levelNode{
+  width:100%;
+  max-width:350px;
+  position:relative;
 }
-
-.full{
-width:100%
+.levelNode button{
+  width:100%;
+  min-height:68px;
+  border-radius:20px;
+  padding:10px 15px;
+  display:flex;
+  align-items:center;
+  gap:13px;
+  text-align:left;
+  border:1px solid var(--line);
+  background:#10243a;
 }
-
-.secondary{
-background:#14263d;
-margin-top:9px
+.levelNode.open button{border-color:#2b5575}
+.levelNode.done button{
+  border-color:#26714f;
+  background:#0d2b23;
 }
-
-/* LEVEL MAP */
-
-.levels{
-position:relative;
-display:flex;
-flex-direction:column;
-gap:10px;
-padding:10px 4px 20px
+.levelNode.current button{
+  border-color:var(--accent);
+  box-shadow:0 0 0 2px #6ee7ff22;
 }
-
-.level{
-position:relative;
-width:92%;
-min-height:86px;
-background:linear-gradient(145deg,#13233a,#0b1728);
-border:1px solid #263b59;
-border-radius:22px;
-padding:13px 16px;
-cursor:pointer;
-box-shadow:0 8px 20px #0005
+.levelNode.locked button{
+  opacity:.48;
+  cursor:not-allowed;
 }
-
-.level:nth-child(3n+2){
-margin-left:8%
+.nodeIcon{
+  width:44px;
+  height:44px;
+  flex:none;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  background:#172f49;
+  font-weight:900;
 }
-
-.level:nth-child(3n){
-margin-left:4%
+.done .nodeIcon{background:#164c38}
+.current .nodeIcon{background:#174458}
+.nodeText strong{display:block}
+.nodeText small{color:var(--muted)}
+.connector{
+  height:10px;
+  width:3px;
+  background:#29445d;
 }
-
-.level:before{
-content:"";
-position:absolute;
-left:50%;
-top:-11px;
-height:11px;
-border-left:3px dashed #29405f
+.mapMore{
+  width:100%;
+  margin-top:15px;
+  background:#122b42;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:13px;
 }
-
-.level:first-child:before{
-display:none
-}
-
-.level.locked{
-opacity:.5;
-cursor:not-allowed;
-filter:saturate(.5)
-}
-
-.level.open{
-border-color:#2b6cb0
-}
-
-.level.done{
-border-color:#23966b;
-background:linear-gradient(145deg,#12392f,#0b211d)
-}
-
-.level.current{
-box-shadow:
-0 0 0 2px #60a5fa55,
-0 8px 22px #0006
-}
-
-.node{
-display:flex;
-align-items:center;
-gap:12px
-}
-
-.ln{
-width:48px;
-height:48px;
-border-radius:50%;
-display:grid;
-place-items:center;
-background:#17345a;
-color:#fff;
-font-size:21px;
-font-weight:900;
-border:2px solid #2b5d91;
-flex:0 0 auto
-}
-
-.locked .ln{
-background:#263241;
-border-color:#3b4655
-}
-
-.done .ln{
-background:#16805f;
-border-color:#36c99a
-}
-
-.ld{
-font-weight:900;
-font-size:15px
-}
-
-.lx{
-font-size:11px;
-color:#94a3b8;
-margin-top:3px
-}
-
-.status{
-margin-left:auto;
-font-size:18px
-}
-
-.play{
-display:inline-block;
-margin-top:6px;
-padding:4px 8px;
-border-radius:8px;
-background:#12294b;
-color:#93c5fd;
-font-size:9px;
-font-weight:900
-}
-
-.locked .play{
-background:#1b2430;
-color:#64748b
-}
-
-.done .play{
-background:#123f34;
-color:#86efac
-}
-
-/* STATS */
-
 .stats{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:8px
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  margin-bottom:15px;
 }
-
 .stat{
-background:#0d1b2d;
-border-radius:14px;
-text-align:center;
-padding:10px
+  background:#0d1b2d;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:11px;
+  text-align:center;
+}
+.stat b{display:block;font-size:19px}
+.stat small{color:var(--muted)}
+.gamePanel{
+  position:relative;
+  background:#091522;
+  border:1px solid var(--line);
+  border-radius:24px;
+  padding:16px;
+  min-height:480px;
+  overflow:hidden;
+}
+.gameHeader{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:12px;
+}
+.gameHeader strong{font-size:17px}
+.score{
+  color:var(--accent);
+  font-weight:900;
+}
+.message{
+  text-align:center;
+  color:var(--muted);
+  min-height:22px;
+  margin:7px 0 14px;
+}
+.primary{
+  background:linear-gradient(135deg,#55ddff,#6ee7ff);
+  color:#04111c;
+  font-weight:900;
+  padding:13px 20px;
+  border-radius:14px;
+}
+.secondary{
+  background:#14273d;
+  border:1px solid var(--line);
+  padding:12px 17px;
+  border-radius:14px;
+}
+.center{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+.hidden{display:none!important}
+
+/* Memory */
+.memoryGrid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:9px;
+  max-width:470px;
+  margin:20px auto;
+}
+.card{
+  aspect-ratio:1;
+  border-radius:14px;
+  background:#122a43;
+  border:1px solid #29445e;
+  display:grid;
+  place-items:center;
+  font-size:26px;
+  transition:.2s;
+}
+.card.open,.card.matched{background:#153c4d}
+.card.matched{border-color:var(--green)}
+
+/* Reaction */
+.reactionArena{
+  height:430px;
+  position:relative;
+  overflow:hidden;
+  border-radius:20px;
+  background:linear-gradient(#091725,#06101b);
+  border:1px solid #1e3850;
+}
+.falling{
+  position:absolute;
+  bottom:-70px;
+  display:grid;
+  place-items:center;
+  font-weight:900;
+  user-select:none;
+  touch-action:manipulation;
+  animation:rise linear forwards;
+}
+.bubble{
+  width:54px;
+  height:54px;
+  border-radius:50%;
+  background:radial-gradient(circle at 30% 25%,#fff8,#4bdcff 22%,#2477ff 70%);
+  box-shadow:0 0 22px #3acfff55;
+}
+.bubble.alt{
+  background:radial-gradient(circle at 30% 25%,#fff8,#ffcb57 20%,#ff6b35 72%);
+}
+.bubble.green{
+  background:radial-gradient(circle at 30% 25%,#fff8,#67f5b2 20%,#159b67 72%);
+}
+.number{
+  width:50px;
+  height:50px;
+  border-radius:14px;
+  background:#24182c;
+  border:2px solid #ff5d82;
+  color:#ff7d9a;
+  font-size:18px;
+}
+@keyframes rise{
+  to{transform:translateY(-520px) rotate(360deg);opacity:.95}
 }
 
-.sl{
-font-size:9px;
-color:#64748b
+/* Mind Shift */
+.shiftBox{
+  max-width:520px;
+  margin:25px auto;
+  text-align:center;
 }
-
-.sv{
-font-size:18px;
-font-weight:900;
-margin-top:3px
-}
-
-.bar{
-height:7px;
-background:#14263d;
-border-radius:99px;
-overflow:hidden;
-margin:10px 0 13px
-}
-
-.fill{
-height:100%;
-width:0;
-background:#60a5fa;
-transition:.2s
-}
-
-.hide{
-display:none!important
-}
-
-/* MEMORY */
-
-.memory{
-display:grid;
-gap:8px
-}
-
-.m{
-aspect-ratio:1;
-border:0;
-border-radius:13px;
-background:#14263d;
-color:transparent;
-font-size:24px;
-font-weight:900
-}
-
-.m.open,
-.m.hit{
-background:#2563eb;
-color:#fff
-}
-
-.m.hit{
-background:#15803d
-}
-
-/* QUICK REACTION */
-
-.rmsg{
-text-align:center;
-min-height:29px;
-color:#93c5fd;
-font-weight:900
-}
-
-.arena{
-height:500px;
-position:relative;
-overflow:hidden;
-border:1px solid #1d2d43;
-border-radius:23px;
-background:
-linear-gradient(to top,#102846,transparent 58%),
-#071624;
-touch-action:manipulation
-}
-
-.o{
-position:absolute;
-bottom:-65px;
-width:55px;
-height:55px;
-display:grid;
-place-items:center;
-z-index:3;
-animation:up linear forwards;
-cursor:pointer;
-user-select:none
-}
-
-.b{
-border-radius:50%;
-background:#2563eb;
-box-shadow:
-inset 7px 7px 13px #fff4,
-inset -7px -7px 13px #0005,
-0 5px 18px #2563eb55;
-font-size:22px
-}
-
-.star{
-border-radius:17px;
-transform:rotate(10deg)
-}
-
-.ring{
-background:transparent;
-border:7px solid #60a5fa
-}
-
-.diamond{
-border-radius:14px;
-transform:rotate(45deg)
-}
-
-.n{
-border-radius:14px;
-background:#334155;
-border:2px solid #64748b;
-font-size:19px
-}
-
-@keyframes up{
-to{
-transform:translateY(-580px) rotate(180deg)
-}
-}
-
-.float{
-position:absolute;
-font-weight:900;
-animation:f .6s forwards;
-z-index:8
-}
-
-@keyframes f{
-to{
-opacity:0;
-transform:translateY(-35px)
-}
-}
-
-/* MIND SHIFT */
-
-.shift{
-background:#0b192b;
-border-radius:22px;
-min-height:340px;
-padding:22px;
-text-align:center;
-display:flex;
-flex-direction:column;
-justify-content:center
-}
-
 .rule{
-color:#94a3b8;
-line-height:1.5
+  background:#122a42;
+  border:1px solid #29445d;
+  border-radius:18px;
+  padding:15px;
+  margin-bottom:15px;
 }
-
-.sym{
-font-size:68px;
-font-weight:900;
-margin:18px
+.rule small{color:var(--muted)}
+.rule b{display:block;font-size:25px;margin-top:5px}
+.shiftChoices{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
 }
-
-.sopts{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:10px
+.shiftChoice{
+  min-height:90px;
+  background:#132a42;
+  border:1px solid #29445d;
+  border-radius:17px;
+  font-size:28px;
 }
+.shiftChoice:active{transform:scale(.96)}
 
-.sopt{
-border:0;
-background:#172940;
-color:#fff;
-border-radius:15px;
-padding:16px;
-font-size:22px;
-font-weight:900
+/* Logic */
+.logicBox{
+  max-width:600px;
+  margin:auto;
 }
-
-/* LOGIC LAB */
-
-.q{
-font-size:19px;
-font-weight:900;
-line-height:1.5;
-margin:8px 0 18px
+.question{
+  font-size:18px;
+  line-height:1.5;
+  background:#10243a;
+  border:1px solid #29445d;
+  padding:18px;
+  border-radius:18px;
+  margin-bottom:12px;
 }
-
-.opts{
-display:grid;
-gap:10px
+.options{
+  display:grid;
+  gap:9px;
 }
-
-.opt{
-text-align:left;
-border:1px solid #24364d;
-background:#101f32;
-color:#fff;
-border-radius:15px;
-padding:14px;
-font-size:14px;
-font-weight:700
+.logicOption{
+  padding:15px;
+  background:#0f2135;
+  border:1px solid #29445d;
+  border-radius:14px;
+  text-align:left;
 }
-
-.good{
-background:#166534
-}
-
-.bad{
-background:#991b1b
-}
-
+.logicOption:active{transform:scale(.985)}
 .explain{
-font-size:12px;
-color:#94a3b8;
-line-height:1.5;
-margin-top:12px
+  background:#10283c;
+  border:1px solid #2c526d;
+  border-radius:15px;
+  padding:13px;
+  margin-top:13px;
+  color:#c5d7e8;
+  line-height:1.45;
 }
 
-/* MIND CALM */
-
-.calm{
-height:460px;
-border-radius:24px;
-background:
-radial-gradient(circle,#1e3a5f66,transparent 35%),
-#081728;
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-text-align:center
+/* Calm */
+.calmBox{
+  text-align:center;
+  max-width:500px;
+  margin:auto;
 }
-
-.circle{
-width:155px;
-height:155px;
-border-radius:50%;
-border:2px solid #60a5fa55;
-background:#60a5fa18;
-display:grid;
-place-items:center;
-font-weight:900;
-animation:breath 8s ease-in-out infinite
+.breathCircle{
+  width:190px;
+  height:190px;
+  margin:45px auto 25px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:radial-gradient(circle,#6ee7ff44,#16384c 55%,#0b1728);
+  border:2px solid #3e7d96;
+  box-shadow:0 0 45px #53dfff22;
 }
-
-@keyframes breath{
-0%,100%{
-transform:scale(.72)
+.breathCircle.animate{animation:breathe 8s ease-in-out infinite}
+@keyframes breathe{
+  0%,100%{transform:scale(.72)}
+  50%{transform:scale(1.12)}
 }
-50%{
-transform:scale(1.18)
+.calmText{font-size:22px;font-weight:900}
+.calmSub{color:var(--muted);margin-top:8px;line-height:1.5}
+.calmButtons{
+  display:flex;
+  justify-content:center;
+  gap:9px;
+  flex-wrap:wrap;
+  margin-top:20px;
 }
+.progress{
+  height:8px;
+  background:#16283b;
+  border-radius:10px;
+  overflow:hidden;
+  margin:12px 0;
 }
-
-.ct{
-font-size:20px;
-font-weight:900;
-margin-top:27px
+.progress i{
+  display:block;
+  height:100%;
+  width:0;
+  background:var(--accent);
+  transition:.3s;
 }
-
-.cm{
-font-size:13px;
-color:#94a3b8;
-margin-top:7px
-}
-
-/* RESULT */
-
 .result{
-text-align:center
+  text-align:center;
+  padding:25px 10px;
 }
-
-.trophy{
-font-size:55px
+.result h2{font-size:28px}
+.resultScore{
+  font-size:50px;
+  font-weight:900;
+  color:var(--accent);
+  margin:15px 0;
 }
-
-.rt{
-font-size:25px;
-font-weight:900
+.adSlot{
+  display:none;
+  min-height:50px;
+  margin:15px 0;
+  text-align:center;
+  color:#60748a;
+  font-size:10px;
 }
-
-.rs{
-font-size:42px;
-font-weight:900;
-margin:8px
-}
-
-@media(max-width:360px){
-.arena{
-height:440px
-}
-
-.o{
-width:48px;
-height:48px
-}
+@media(max-width:520px){
+  .gameGrid{grid-template-columns:1fr}
+  .gameCard{min-height:145px}
+  .gamePanel{min-height:500px}
 }
 </style>
 </head>
 
 <body>
-
 <div class="app">
 
 <header>
-<div class="logo">🧠 MindSprint</div>
-<div class="tag">Train • Focus • Reset</div>
+  <div class="logo">Mind<span>Sprint</span></div>
+  <div class="headerSmall">Learn • Play • Remember</div>
 </header>
 
 <!-- HOME -->
+<section id="home" class="screen active">
+  <div class="hero">
+    <h1>Train your brain.</h1>
+    <p>Play different challenges, clear levels, improve your skills and build your own MindSprint progress.</p>
+  </div>
 
-<section id="home" class="screen on">
+  <div class="gameGrid">
 
-<div class="section">Brain Training</div>
+    <button class="gameCard" onclick="openLevels('memory')">
+      <div class="gameIcon">🧠</div>
+      <h3>Memory Match</h3>
+      <p>Remember positions, match pairs and push your memory further.</p>
+      <span class="gameTag">MEMORY</span>
+    </button>
 
-<div class="card game" onclick="levels('memory')">
-<div class="ico">🧠</div>
-<div class="info">
-<div class="name">Memory Match</div>
-<div class="desc">
-Remember positions, match pairs and sharpen recall.
-</div>
-</div>
-<div class="arrow">›</div>
-</div>
+    <button class="gameCard" onclick="openLevels('reaction')">
+      <div class="gameIcon">⚡</div>
+      <h3>Quick Reaction</h3>
+      <p>Catch the right bubbles while avoiding numbers as everything gets faster.</p>
+      <span class="gameTag">SPEED</span>
+    </button>
 
-<div class="card game" onclick="levels('reaction')">
-<div class="ico">⚡</div>
-<div class="info">
-<div class="name">Quick Reaction</div>
-<div class="desc">
-Pop bubbles, avoid numbers and react faster.
-</div>
-</div>
-<div class="arrow">›</div>
-</div>
+    <button class="gameCard" onclick="openLevels('shift')">
+      <div class="gameIcon">🔄</div>
+      <h3>Mind Shift</h3>
+      <p>Switch rules quickly and train mental flexibility.</p>
+      <span class="gameTag">FLEXIBILITY</span>
+    </button>
 
-<div class="card game" onclick="levels('shift')">
-<div class="ico">🔄</div>
-<div class="info">
-<div class="name">Mind Shift</div>
-<div class="desc">
-Changing rules test flexible thinking.
-</div>
-</div>
-<div class="arrow">›</div>
-</div>
+    <button class="gameCard" onclick="openLevels('logic')">
+      <div class="gameIcon">🧩</div>
+      <h3>Logic Lab</h3>
+      <p>Patterns, numbers, reasoning and bilingual brain puzzles.</p>
+      <span class="gameTag">LOGIC</span>
+    </button>
 
-<div class="card game" onclick="levels('logic')">
-<div class="ico">🧩</div>
-<div class="info">
-<div class="name">Logic Lab</div>
-<div class="desc">
-Hindi + English reasoning with generated challenges.
-</div>
-</div>
-<div class="arrow">›</div>
-</div>
+    <button class="gameCard" onclick="openLevels('calm')">
+      <div class="gameIcon">🌿</div>
+      <h3>Mind Calm</h3>
+      <p>Interactive breathing and focus sessions to reset your mind.</p>
+      <span class="gameTag">FOCUS</span>
+    </button>
 
-<div class="card game" onclick="levels('calm')">
-<div class="ico">🌿</div>
-<div class="info">
-<div class="name">Mind Calm</div>
-<div class="desc">
-Interactive breathing and focus sessions.
-</div>
-</div>
-<div class="arrow">›</div>
-</div>
-
-<div class="notice">
-Healthy brain training: focus, memory, reaction, flexible thinking,
-logic and calm. Play at your own pace.
-</div>
-
+  </div>
 </section>
-
 
 <!-- LEVELS -->
-
 <section id="levels" class="screen">
+  <div class="topbar">
+    <button class="back" onclick="goHome()">←</button>
+    <div class="titleBox">
+      <h2 id="levelTitle">Levels</h2>
+      <small id="levelSubtitle"></small>
+    </div>
+  </div>
 
-<div class="top">
-
-<button class="back" onclick="home()">‹</button>
-
-<div>
-<div id="lt" class="title">Levels</div>
-<div id="lsub" class="sub">
-Level 1 is open
-</div>
-</div>
-
-</div>
-
-<div class="notice">
-🍬 <b>Level Path:</b>
-Level 1 complete → Level 2 opens → Level 3 opens → आगे इसी तरह।
-<br><br>
-Jo level ek baar open ho jaye,
-<b>woh kabhi lock nahi hoga.</b>
-<br><br>
-This system supports
-<b>1–10,000 generated levels</b>.
-</div>
-
-<div id="grid" class="levels"></div>
-
-<button
-id="moreLevels"
-class="btn full secondary"
-onclick="loadMoreLevels()">
-Show more levels
-</button>
-
+  <div class="levelMap">
+    <div class="mapTitle">
+      <strong>Level Path</strong>
+      <span id="levelCount"></span>
+    </div>
+    <div id="levelList" class="levelList"></div>
+    <button id="moreLevels" class="mapMore" onclick="showMoreLevels()">Show more levels</button>
+  </div>
 </section>
-
 
 <!-- GAME -->
-
 <section id="game" class="screen">
+  <div class="topbar">
+    <button class="back" onclick="backToLevels()">←</button>
+    <div class="titleBox">
+      <h2 id="gameTitle">Game</h2>
+      <small id="gameLevel"></small>
+    </div>
+  </div>
 
-<div class="top">
+  <div class="stats">
+    <div class="stat"><b id="scoreStat">0</b><small>Score</small></div>
+    <div class="stat"><b id="levelStat">1</b><small>Level</small></div>
+    <div class="stat"><b id="bestStat">0</b><small>Best</small></div>
+  </div>
 
-<button class="back" onclick="back()">‹</button>
-
-<div>
-<div id="gt" class="title">Game</div>
-<div id="gs" class="sub">Level</div>
-</div>
-
-</div>
-
-
-<div class="stats">
-
-<div class="stat">
-<div class="sl">SCORE</div>
-<div id="sc" class="sv">0</div>
-</div>
-
-<div class="stat">
-<div class="sl">LEVEL</div>
-<div id="lv" class="sv">1</div>
-</div>
-
-<div class="stat">
-<div class="sl">BEST</div>
-<div id="be" class="sv">0</div>
-</div>
-
-</div>
-
-<div class="bar">
-<div id="fill" class="fill"></div>
-</div>
-
-
-<!-- MEMORY -->
-
-<div id="mb" class="hide">
-
-<div class="notice">
-Match every pair. Higher levels add cards and reduce preview time.
-</div>
-
-<div id="memory" class="memory"></div>
-
-</div>
-
-
-<!-- REACTION -->
-
-<div id="rb" class="hide">
-
-<div id="rmsg" class="rmsg">
-Tap ONLY bubbles. Numbers reduce score.
-</div>
-
-<div id="arena" class="arena"></div>
-
-<button
-id="rstart"
-class="btn full"
-onclick="reactionStart()">
-Start Reaction Challenge
-</button>
-
-</div>
-
-
-<!-- SHIFT -->
-
-<div id="sb" class="hide">
-
-<div class="shift">
-
-<div id="rule" class="rule"></div>
-
-<div id="sym" class="sym">?</div>
-
-<div id="sopts" class="sopts"></div>
-
-</div>
-
-</div>
-
-
-<!-- LOGIC -->
-
-<div id="lb" class="hide">
-
-<div id="question" class="q"></div>
-
-<div id="opts" class="opts"></div>
-
-<div id="explain" class="explain"></div>
-
-</div>
-
-
-<!-- CALM -->
-
-<div id="cb" class="hide">
-
-<div class="calm">
-
-<div class="circle">
-Breathe
-</div>
-
-<div id="ct" class="ct">
-Get comfortable
-</div>
-
-<div id="cm" class="cm">
-Press Start when ready
-</div>
-
-</div>
-
-<button
-id="cstart"
-class="btn full"
-onclick="calmStart()">
-Start Calm Session
-</button>
-
-</div>
-
-
-<!-- RESULT -->
-
-<div id="result" class="card result hide">
-
-<div class="trophy">🏆</div>
-
-<div class="rt">
-Level Complete
-</div>
-
-<div id="rs" class="rs">
-0
-</div>
-
-<div id="rtx" class="muted"></div>
-
-<button
-class="btn full"
-onclick="restart()">
-Play Again
-</button>
-
-<button
-class="btn full secondary"
-onclick="back()">
-Choose Another Level
-</button>
-
-</div>
-
+  <div id="gamePanel" class="gamePanel"></div>
 </section>
 
 </div>
 
-
 <script>
-'use strict';
+/* =========================================================
+   MindSprint Final Engine
+   ========================================================= */
 
-
-const games={
-memory:['🧠','Memory Match'],
-reaction:['⚡','Quick Reaction'],
-shift:['🔄','Mind Shift'],
-logic:['🧩','Logic Lab'],
-calm:['🌿','Mind Calm']
+const GAME_INFO={
+  memory:{
+    title:"🧠 Memory Match",
+    sub:"Remember and match",
+  },
+  reaction:{
+    title:"⚡ Quick Reaction",
+    sub:"Bubble vs Number",
+  },
+  shift:{
+    title:"🔄 Mind Shift",
+    sub:"Switch the rule",
+  },
+  logic:{
+    title:"🧩 Logic Lab",
+    sub:"Reasoning challenge",
+  },
+  calm:{
+    title:"🌿 Mind Calm",
+    sub:"Focus and breathe",
+  }
 };
 
-const MAX=10000;
-
-let game='';
-let level=1;
-let score=0;
-let best=0;
-let timer=null;
-let interval=null;
-
-let mem={};
-let react={};
-let shift={};
-let logic={};
-let calm={};
-
-const $=x=>document.getElementById(x);
-
-
-/* BASIC */
-
-function clear(){
-
-if(timer)
-clearTimeout(timer);
-
-if(interval)
-clearInterval(interval);
-
-timer=null;
-interval=null;
-
-document
-.querySelectorAll('.o')
-.forEach(x=>x.remove());
-
-}
-
-function show(id){
-
-['home','levels','game']
-.forEach(x=>$(x).classList.remove('on'));
-
-$(id).classList.add('on');
-
-}
-
-function home(){
-
-clear();
-
-show('home');
-
-}
-
-function setScore(v){
-
-score=Math.max(0,Math.round(v));
-
-$('sc').textContent=score;
-
-}
-
-function prog(v){
-
-$('fill').style.width=
-Math.max(0,Math.min(100,v))+'%';
-
-}
-
-function bestKey(g,l){
-
-return 'mindsprint_'+g+'_'+l;
-
-}
-
-function getBest(g,l){
-
-return +(localStorage.getItem(bestKey(g,l))||0);
-
-}
-
-function save(g,l,s){
-
-if(s>getBest(g,l))
-localStorage.setItem(bestKey(g,l),s);
-
-}
-
-
-/* DIFFICULTY */
-
-function diff(l){
-
-if(l<=20)
-return [
-'Easy',
-'Warm up your brain.'
-];
-
-if(l<=100)
-return [
-'Easy+',
-'More speed and attention.'
-];
-
-if(l<=500)
-return [
-'Medium',
-'Real concentration required.'
-];
-
-if(l<=2000)
-return [
-'Hard',
-'Less time. More thinking.'
-];
-
-return [
-'Genius',
-'High-speed brain challenge.'
-];
-
-}
-
-
-/* LEVEL SYSTEM */
-
-/*
-Only Level 1 is initially unlocked.
-
-Completing Level N permanently unlocks N+1.
-
-Previously unlocked levels never close.
-
-Progress is stored in localStorage.
-*/
-
+let currentGame="";
+let currentLevel=1;
 let visibleLevels=20;
+let score=0;
+let gameTimer=null;
+let gameCleanup=null;
 
-function unlocked(g,l){
+/* ---------- STORAGE ---------- */
 
-let highest=
-+(localStorage.getItem(
-'mindsprint_unlocked_'+g
-)||1);
-
-return l===1 || l<=highest;
-
+function keyUnlocked(g){
+  return "mindsprint_unlocked_"+g;
 }
 
-function completed(g,l){
+function getUnlocked(g){
+  return Math.max(1,Number(localStorage.getItem(keyUnlocked(g))||1));
+}
 
-return localStorage.getItem(
-'mindsprint_done_'+g+'_'+l
-)==='1';
+function isDone(g,l){
+  return localStorage.getItem("mindsprint_done_"+g+"_"+l)==="1";
+}
 
+function markDone(g,l){
+  localStorage.setItem("mindsprint_done_"+g+"_"+l,"1");
 }
 
 function unlockNext(g,l){
-
-let key=
-'mindsprint_unlocked_'+g;
-
-let old=
-+(localStorage.getItem(key)||1);
-
-let next=
-Math.min(MAX,l+1);
-
-if(next>old){
-
-localStorage.setItem(
-key,
-next
-);
-
+  let u=getUnlocked(g);
+  if(l>=u){
+    localStorage.setItem(keyUnlocked(g),String(l+1));
+  }
+  markDone(g,l);
 }
 
-localStorage.setItem(
-'mindsprint_done_'+g+'_'+l,
-'1'
-);
-
-visibleLevels=
-Math.max(
-visibleLevels,
-Math.min(MAX,next)
-);
-
+function bestKey(g,l){
+  return "mindsprint_best_"+g+"_"+l;
 }
 
-function levels(g){
+function getBest(g,l){
+  return Number(localStorage.getItem(bestKey(g,l))||0);
+}
 
-clear();
+function saveBest(g,l,s){
+  if(s>getBest(g,l)){
+    localStorage.setItem(bestKey(g,l),String(s));
+  }
+}
 
-game=g;
+function totalDone(g){
+  let u=getUnlocked(g);
+  let n=0;
+  for(let i=1;i<u;i++){
+    if(isDone(g,i)) n++;
+  }
+  return n;
+}
 
-let highest=
-+(localStorage.getItem(
-'mindsprint_unlocked_'+g
-)||1);
+/* ---------- NAVIGATION ---------- */
 
-visibleLevels=
-Math.max(
-20,
-Math.min(MAX,highest+10)
-);
+function show(id){
+  document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
 
-$('lt').textContent=
-games[g][0]+' '+games[g][1];
+function goHome(){
+  stopGame();
+  show("home");
+}
 
-renderLevels();
-
-show('levels');
-
+function openLevels(g){
+  currentGame=g;
+  visibleLevels=20;
+  document.getElementById("levelTitle").textContent=GAME_INFO[g].title;
+  document.getElementById("levelSubtitle").textContent=GAME_INFO[g].sub;
+  renderLevels();
+  show("levels");
 }
 
 function renderLevels(){
+  const list=document.getElementById("levelList");
+  const unlocked=getUnlocked(currentGame);
+  const max=Math.min(10000,visibleLevels);
 
-let highest=
-+(localStorage.getItem(
-'mindsprint_unlocked_'+game
-)||1);
+  list.innerHTML="";
 
-$('lsub').textContent=
-'Level '+highest+' open • '+
-(
-highest>1
-?
-'previous levels stay open'
-:
-'complete Level 1 to open Level 2'
-);
+  for(let l=1;l<=max;l++){
+    const node=document.createElement("div");
+    node.className="levelNode";
 
-let e=
-Math.min(MAX,visibleLevels);
+    const locked=l>unlocked;
+    const done=isDone(currentGame,l);
+    const current=l===unlocked;
 
-let h='';
+    if(locked) node.classList.add("locked");
+    else node.classList.add("open");
+    if(done) node.classList.add("done");
+    if(current) node.classList.add("current");
 
-for(let l=1;l<=e;l++){
+    const btn=document.createElement("button");
 
-let d=diff(l);
+    if(locked){
+      btn.disabled=true;
+    }else{
+      btn.onclick=()=>startGame(currentGame,l);
+    }
 
-let u=unlocked(game,l);
+    let icon="🔓";
+    if(locked) icon="🔒";
+    if(done) icon="✓";
+    if(current) icon="▶";
 
-let done=completed(game,l);
+    btn.innerHTML=
+      '<div class="nodeIcon">'+icon+'</div>'+
+      '<div class="nodeText">'+
+      '<strong>Level '+l+'</strong>'+
+      '<small>'+
+      (done?"Completed • Replay anytime":
+       current?"Current level • Play now":
+       "Unlocked • Replay anytime")+
+      '</small></div>';
 
-let cls=
-'level '+
-(u?'open':'locked')+
-(done?' done':'')+
-(u&&l===highest?' current':'');
+    node.appendChild(btn);
+    list.appendChild(node);
 
-h+=`
+    if(l<max){
+      const c=document.createElement("div");
+      c.className="connector";
+      list.appendChild(c);
+    }
+  }
 
-<div
-class="${cls}"
-${u?`onclick="start(${l})"`:''}
->
+  document.getElementById("levelCount").textContent=
+    "Unlocked: "+unlocked+" • Done: "+totalDone(currentGame);
 
-<div class="node">
-
-<div class="ln">
-
-${done?'✓':(u?l:'🔒')}
-
-</div>
-
-<div>
-
-<div class="ld">
-Level ${l} • ${d[0]}
-</div>
-
-<div class="lx">
-
-${
-done
-?
-'Completed • Play again anytime'
-:
-(
-u
-?
-'Open • '+d[1]
-:
-'Locked • Complete Level '+(l-1)+' first'
-)
+  document.getElementById("moreLevels").style.display=
+    visibleLevels<10000?"block":"none";
 }
 
-</div>
-
-<span class="play">
-
-${
-done
-?
-'REPLAY'
-:
-(
-u
-?
-'PLAY'
-:
-'LOCKED'
-)
+function showMoreLevels(){
+  visibleLevels=Math.min(10000,visibleLevels+20);
+  renderLevels();
 }
 
-</span>
-
-</div>
-
-<div class="status">
-
-${
-done
-?
-'🏆'
-:
-(
-u
-?
-'▶'
-:
-'🔒'
-)
+function backToLevels(){
+  stopGame();
+  openLevels(currentGame);
 }
 
-</div>
+/* ---------- GAME START ---------- */
 
-</div>
+function startGame(g,l){
+  stopGame();
 
-</div>
-`;
+  currentGame=g;
+  currentLevel=l;
+  score=0;
 
+  document.getElementById("gameTitle").textContent=GAME_INFO[g].title;
+  document.getElementById("gameLevel").textContent="Level "+l;
+  document.getElementById("levelStat").textContent=l;
+  document.getElementById("bestStat").textContent=getBest(g,l);
+  document.getElementById("scoreStat").textContent="0";
+
+  show("game");
+
+  if(g==="memory") initMemory(l);
+  if(g==="reaction") initReaction(l);
+  if(g==="shift") initShift(l);
+  if(g==="logic") initLogic(l);
+  if(g==="calm") initCalm(l);
 }
 
-$('grid').innerHTML=h;
+function stopGame(){
+  if(gameTimer){
+    clearInterval(gameTimer);
+    gameTimer=null;
+  }
 
-$('moreLevels').style.display=
-e<MAX?'block':'none';
-
+  if(gameCleanup){
+    try{gameCleanup()}catch(e){}
+    gameCleanup=null;
+  }
 }
 
-function loadMoreLevels(){
+/* ---------- COMMON ---------- */
 
-visibleLevels=
-Math.min(
-MAX,
-visibleLevels+20
-);
-
-renderLevels();
-
+function setScore(v){
+  score=v;
+  document.getElementById("scoreStat").textContent=v;
 }
 
-function back(){
-
-clear();
-
-renderLevels();
-
-show('levels');
-
+function addScore(v){
+  setScore(Math.max(0,score+v));
 }
 
+function finishGame(finalScore=score){
+  stopGame();
 
-/* START GAME */
+  saveBest(currentGame,currentLevel,finalScore);
+  unlockNext(currentGame,currentLevel);
 
-function start(l){
+  const panel=document.getElementById("gamePanel");
 
-if(!unlocked(game,l))
-return;
+  panel.innerHTML=
+    '<div class="result">'+
+    '<div style="font-size:50px">🏆</div>'+
+    '<h2>Level Complete!</h2>'+
+    '<p style="color:var(--muted)">Level '+currentLevel+' cleared successfully.</p>'+
+    '<div class="resultScore">'+finalScore+'</div>'+
+    '<p>Score</p>'+
+    '<div style="margin-top:20px;display:flex;gap:9px;justify-content:center;flex-wrap:wrap">'+
+    '<button class="secondary" onclick="backToLevels()">Level Map</button>'+
+    '<button class="primary" onclick="startGame(currentGame,currentLevel)">Replay</button>'+
+    '<button class="secondary" onclick="startGame(currentGame,currentLevel+1)">Next Level →</button>'+
+    '</div>'+
+    '</div>';
 
-clear();
-
-level=l;
-
-setScore(0);
-
-best=getBest(game,l);
-
-$('gt').textContent=
-games[game][0]+' '+games[game][1];
-
-$('gs').textContent=
-'Level '+l+' • '+diff(l)[0];
-
-$('lv').textContent=l;
-
-$('be').textContent=best;
-
-prog(0);
-
-[
-'mb',
-'rb',
-'sb',
-'lb',
-'cb',
-'result'
-]
-.forEach(x=>
-$(x).classList.add('hide')
-);
-
-show('game');
-
-if(game==='memory')
-memoryStart();
-
-if(game==='reaction')
-reactionSetup();
-
-if(game==='shift')
-shiftStart();
-
-if(game==='logic')
-logicStart();
-
-if(game==='calm')
-calmSetup();
-
+  document.getElementById("bestStat").textContent=getBest(currentGame,currentLevel);
 }
 
+/* =========================================================
+   MEMORY MATCH
+   ========================================================= */
 
-/* COMPLETE LEVEL */
+function initMemory(level){
+  const panel=document.getElementById("gamePanel");
 
-function finish(msg){
+  const pairs=Math.min(10,4+Math.floor((level-1)/2));
+  const symbols=["🍎","🚀","🧠","⭐","🎯","🌙","🔥","🍀","⚡","🎵"];
+  const selected=symbols.slice(0,pairs);
 
-clear();
+  let cards=[...selected,...selected];
+  cards.sort(()=>Math.random()-.5);
 
-save(
-game,
-level,
-score
-);
+  let first=null;
+  let second=null;
+  let lock=false;
+  let matched=0;
+  let moves=0;
 
-unlockNext(
-game,
-level
-);
+  panel.innerHTML=
+    '<div class="gameHeader">'+
+    '<strong>Remember the pairs</strong>'+
+    '<span class="score">Pairs: <b id="pairCount">0</b>/'+pairs+'</span>'+
+    '</div>'+
+    '<div class="message">Find every matching pair.</div>'+
+    '<div class="memoryGrid" id="memoryGrid"></div>';
 
-$('be').textContent=
-getBest(game,level);
+  const grid=document.getElementById("memoryGrid");
 
-$('rs').textContent=
-score;
+  cards.forEach((symbol,i)=>{
+    const card=document.createElement("button");
+    card.className="card";
+    card.dataset.symbol=symbol;
+    card.textContent="?";
+    card.onclick=()=>flip(card);
+    grid.appendChild(card);
+  });
 
-let next=
-level<MAX
-?
-level+1
-:
-null;
+  function flip(card){
+    if(lock||card.classList.contains("open")||card.classList.contains("matched"))return;
 
-$('rtx').textContent=
-msg+
-' Best score: '+
-getBest(game,level)+
-'. '+
-(
-next
-?
-'Level '+next+' is now OPEN.'
-:
-'You reached the final level.'
-);
+    card.classList.add("open");
+    card.textContent=card.dataset.symbol;
 
-[
-'mb',
-'rb',
-'sb',
-'lb',
-'cb'
-]
-.forEach(x=>
-$(x).classList.add('hide')
-);
+    if(!first){
+      first=card;
+      return;
+    }
 
-$('result').classList.remove('hide');
+    second=card;
+    moves++;
 
-prog(100);
+    if(first.dataset.symbol===second.dataset.symbol){
+      first.classList.add("matched");
+      second.classList.add("matched");
+      matched++;
+      document.getElementById("pairCount").textContent=matched;
 
+      first=null;
+      second=null;
+
+      setScore(Math.max(0,1000-(moves*12)+(level*25)));
+
+      if(matched===pairs){
+        setTimeout(()=>finishGame(score+level*20),450);
+      }
+
+    }else{
+      lock=true;
+
+      setTimeout(()=>{
+        first.classList.remove("open");
+        second.classList.remove("open");
+        first.textContent="?";
+        second.textContent="?";
+        first=null;
+        second=null;
+        lock=false;
+      },650);
+    }
+  }
 }
 
-function restart(){
+/* =========================================================
+   QUICK REACTION
+   ========================================================= */
 
-start(level);
+function initReaction(level){
+  const panel=document.getElementById("gamePanel");
 
+  const duration=Math.min(30000,13000+level*650);
+  const spawnDelay=Math.max(260,900-level*22);
+  const speed=Math.max(2.2,6.5-level*.025);
+
+  let caught=0;
+  let target=Math.min(25,7+Math.floor(level/3));
+  let running=true;
+
+  panel.innerHTML=
+    '<div class="gameHeader">'+
+    '<strong>Pop BUBBLES only</strong>'+
+    '<span class="score">Hits: <b id="hitCount">0</b>/'+target+'</span>'+
+    '</div>'+
+    '<div class="message">🟢 Bubble = + score &nbsp; | &nbsp; 🔢 Number = − score</div>'+
+    '<div class="reactionArena" id="reactionArena"></div>';
+
+  const arena=document.getElementById("reactionArena");
+
+  function spawn(){
+    if(!running)return;
+
+    const isNumber=Math.random()<Math.min(.48,.28+level*.006);
+    const el=document.createElement("button");
+
+    el.className=isNumber
+      ?"falling number"
+      :"falling bubble "+(["","alt","green"][Math.floor(Math.random()*3)]);
+
+    if(isNumber){
+      el.textContent=String(Math.floor(Math.random()*90)+10);
+    }else{
+      el.textContent=["●","◆","✦","●"][Math.floor(Math.random()*4)];
+    }
+
+    const x=4+Math.random()*88;
+    el.style.left=x+"%";
+
+    const dur=Math.max(2.2,speed+(Math.random()*2));
+
+    el.style.animationDuration=dur+"s";
+
+    el.onclick=(e)=>{
+      e.stopPropagation();
+
+      if(isNumber){
+        addScore(-Math.max(2,Math.floor(level/3)));
+        el.remove();
+        return;
+      }
+
+      caught++;
+      addScore(10+Math.floor(level*.5));
+      document.getElementById("hitCount").textContent=caught;
+      el.remove();
+
+      if(caught>=target){
+        running=false;
+        finishGame(score+Math.floor(Math.max(0,10000-(Date.now()%10000))/100));
+      }
+    };
+
+    el.addEventListener("animationend",()=>el.remove());
+    arena.appendChild(el);
+  }
+
+  gameTimer=setInterval(spawn,spawnDelay);
+
+  setTimeout(()=>{
+    if(running){
+      running=false;
+      finishGame(score);
+    }
+  },duration);
+
+  gameCleanup=()=>{
+    running=false;
+    arena.innerHTML="";
+  };
 }
 
-function shuffle(a){
+/* =========================================================
+   MIND SHIFT
+   ========================================================= */
 
-return a.sort(
-()=>Math.random()-.5
-);
+function initShift(level){
+  const panel=document.getElementById("gamePanel");
 
+  const total=Math.min(20,6+Math.floor(level*.7));
+  let round=0;
+  let points=0;
+  let ruleIndex=0;
+
+  const rules=[
+    {name:"COLOR",desc:"Choose the COLOR shown by the word.",type:"color"},
+    {name:"SHAPE",desc:"Choose the SHAPE shown by the symbol.",type:"shape"},
+    {name:"NUMBER",desc:"Choose the NUMBER value.",type:"number"},
+    {name:"OPPOSITE",desc:"Choose the opposite direction.",type:"opposite"}
+  ];
+
+  const colors=[
+    {label:"RED",value:"🔴"},
+    {label:"BLUE",value:"🔵"},
+    {label:"GREEN",value:"🟢"},
+    {label:"YELLOW",value:"🟡"}
+  ];
+
+  function next(){
+    if(round>=total){
+      finishGame(points);
+      return;
+    }
+
+    ruleIndex=(ruleIndex+(Math.random()<.25?1:0))%rules.length;
+    const rule=rules[ruleIndex];
+
+    const correct=Math.floor(Math.random()*4);
+    const options=[];
+
+    for(let i=0;i<4;i++){
+      options.push(i);
+    }
+    options.sort(()=>Math.random()-.5);
+
+    let display="";
+    let labels=[];
+
+    if(rule.type==="color"){
+      const c=colors[correct];
+      display=c.label;
+      labels=options.map(i=>colors[i].label);
+    }
+
+    if(rule.type==="shape"){
+      const shapes=["●","■","▲","◆"];
+      display=shapes[correct];
+      labels=options.map(i=>shapes[i]);
+    }
+
+    if(rule.type==="number"){
+      const nums=["2","4","7","9"];
+      display=nums[correct];
+      labels=options.map(i=>nums[i]);
+    }
+
+    if(rule.type==="opposite"){
+      const dirs=["↑","→","↓","←"];
+      const opposite=[2,3,0,1];
+      display=dirs[correct];
+      labels=options.map(i=>dirs[opposite[i]]);
+    }
+
+    panel.innerHTML=
+      '<div class="shiftBox">'+
+      '<div class="rule">'+
+      '<small>ROUND '+(round+1)+' / '+total+'</small>'+
+      '<b>'+rule.name+'</b>'+
+      '<div style="color:var(--muted);margin-top:5px">'+rule.desc+'</div>'+
+      '</div>'+
+      '<div style="font-size:70px;margin:25px 0">'+display+'</div>'+
+      '<div class="shiftChoices" id="shiftChoices"></div>'+
+      '</div>';
+
+    const box=document.getElementById("shiftChoices");
+
+    labels.forEach((label,idx)=>{
+      const b=document.createElement("button");
+      b.className="shiftChoice";
+      b.textContent=label;
+
+      b.onclick=()=>{
+        const selected=options[idx];
+
+        if(selected===correct){
+          points+=15+level*2;
+          setScore(points);
+          round++;
+          setTimeout(next,120);
+        }else{
+          points=Math.max(0,points-8);
+          setScore(points);
+          round++;
+          setTimeout(next,250);
+        }
+      };
+
+      box.appendChild(b);
+    });
+  }
+
+  next();
 }
 
+/* =========================================================
+   LOGIC LAB
+   ========================================================= */
 
-/* MEMORY MATCH */
+const LOGIC_BANK=[
 
-function memoryStart(){
-
-$('mb').classList.remove('hide');
-
-let pairs=
-Math.min(
-24,
-3+Math.floor(Math.sqrt(level)/2)
-);
-
-let icons=[
-'🚀','🌙','⭐','🔥',
-'🍎','🎯','🦊','🐼',
-'🎵','⚽','🌈','🍀',
-'💎','🧠','🎮','👑',
-'🍉','🪐','🐯','🎲',
-'🎨','☀️','🌸','🍔'
-];
-
-let chosen=
-icons.slice(0,pairs);
-
-mem={
-cards:shuffle([...chosen,...chosen]),
-open:[],
-hit:[],
-lock:false
-};
-
-let board=$('memory');
-
-board.innerHTML='';
-
-board.style.gridTemplateColumns=
-`repeat(${pairs<=4?3:4},1fr)`;
-
-mem.cards.forEach((s,i)=>{
-
-let b=
-document.createElement('button');
-
-b.className='m';
-
-b.dataset.s=s;
-
-b.textContent='?';
-
-b.onclick=()=>{
-flip(b,i)
-};
-
-board.appendChild(b);
-
-});
-
-let preview=
-Math.max(
-700,
-2200-
-Math.min(1400,level*7)
-);
-
-timer=
-setTimeout(()=>{
-
-document
-.querySelectorAll('.m')
-.forEach(b=>{
-b.classList.remove('open');
-b.textContent='?';
-});
-
-},preview);
-
-}
-
-function flip(b,i){
-
-if(
-mem.lock||
-mem.hit.includes(i)||
-mem.open.includes(i)
-)
-return;
-
-b.classList.add('open');
-
-b.textContent=
-mem.cards[i];
-
-mem.open.push(i);
-
-if(mem.open.length<2)
-return;
-
-let [a,c]=mem.open;
-
-let bs=
-document.querySelectorAll('.m');
-
-if(mem.cards[a]===mem.cards[c]){
-
-bs[a].classList.add('hit');
-
-bs[c].classList.add('hit');
-
-mem.hit.push(a,c);
-
-mem.open=[];
-
-setScore(
-score+
-10+
-Math.min(30,Math.floor(level/100))
-);
-
-prog(
-mem.hit.length/
-mem.cards.length*
-100
-);
-
-if(
-mem.hit.length===
-mem.cards.length
-){
-
-setTimeout(
-()=>finish(
-'Excellent memory! Every pair matched.'
-),
-450
-);
-
-}
-
-}else{
-
-mem.lock=true;
-
-setTimeout(()=>{
-
-bs[a].classList.remove('open');
-
-bs[c].classList.remove('open');
-
-bs[a].textContent='?';
-
-bs[c].textContent='?';
-
-mem.open=[];
-
-mem.lock=false;
-
+{
+q:"What number comes next? 2, 6, 12, 20, 30, ?",
+en:"Each term follows a growing multiplication pattern.",
+opts:["42","40","44","46"],
+a:0
 },
-Math.max(
-280,
-800-Math.min(500,level*2)
-)
-);
 
+{
+q:"यदि 3 मशीनें 3 मिनट में 3 वस्तुएँ बनाती हैं, तो 100 मशीनें 3 मिनट में कितनी वस्तुएँ बनाएँगी?",
+en:"If 3 machines make 3 objects in 3 minutes, how many objects can 100 machines make in 3 minutes?",
+opts:["100","300","33","30"],
+a:0
+},
+
+{
+q:"A clock shows 3:15. What is the smaller angle between the hands?",
+en:"3:15 पर घंटे और मिनट की सुई के बीच छोटा कोण कितना है?",
+opts:["7.5°","15°","0°","22.5°"],
+a:0
+},
+
+{
+q:"Find the missing number: 4 → 20, 6 → 42, 8 → 72, 10 → ?",
+en:"Find the number that follows the same rule.",
+opts:["110","100","120","90"],
+a:0
+},
+
+{
+q:"यदि सभी BLOOMS फूल हैं और कुछ फूल जल्दी मुरझाते हैं, तो निश्चित रूप से क्या सही है?",
+en:"If all BLOOMS are flowers and some flowers fade quickly, what must be true?",
+opts:["All BLOOMS are flowers","All flowers are BLOOMS","All BLOOMS fade quickly","No BLOOM fades quickly"],
+a:0
+},
+
+{
+q:"What is the next number? 1, 1, 2, 3, 5, 8, ?",
+en:"The sequence follows the sum of the previous two terms.",
+opts:["13","11","14","15"],
+a:0
+},
+
+{
+q:"A man walks 5 km north, then 5 km east, then 5 km south. How far is he from his starting point?",
+en:"एक व्यक्ति 5 km उत्तर, 5 km पूर्व और 5 km दक्षिण जाता है। वह प्रारंभिक स्थान से कितनी दूर है?",
+opts:["5 km","10 km","15 km","0 km"],
+a:0
+},
+
+{
+q:"If BOOK is coded as 2-15-15-11, how is MIND coded?",
+en:"Use alphabetical positions.",
+opts:["13-9-14-4","12-8-13-3","14-10-15-5","13-8-14-4"],
+a:0
+},
+
+{
+q:"Which number does not belong? 16, 25, 36, 49, 64, 72",
+en:"Look for the property shared by the other numbers.",
+opts:["72","64","49","36"],
+a:0
+},
+
+{
+q:"एक परिवार में 5 लोग हैं। A, B की माँ है। C, A का पिता है। D, B की बहन है। E, C का पुत्र है। E का B से क्या संबंध है?",
+en:"A is B's mother. C is A's father. D is B's sister. E is C's son. What is E's relation to B?",
+opts:["मामा / Uncle","भाई / Brother","पिता / Father","चाचा / Uncle"],
+a:0
+},
+
+{
+q:"What comes next? 3, 9, 27, 81, ?",
+en:"Identify the constant operation between consecutive terms.",
+opts:["243","162","324","729"],
+a:0
+},
+
+{
+q:"यदि CAT को DBU लिखा जाए, तो DOG को कैसे लिखा जाएगा?",
+en:"Each letter is shifted one position forward alphabetically.",
+opts:["EPH","EOG","FPH","DOH"],
+a:0
+},
+
+{
+q:"A train travels 120 km in 2 hours. At the same speed, how far will it travel in 45 minutes?",
+en:"Same speed is maintained throughout.",
+opts:["45 km","50 km","60 km","40 km"],
+a:0
+},
+
+{
+q:"Find the odd one out: 2, 3, 5, 7, 11, 15, 17",
+en:"Consider the mathematical property shared by most terms.",
+opts:["15","11","17","7"],
+a:0
+},
+
+{
+q:"If today is Monday, what day will it be 100 days later?",
+en:"Use the 7-day repeating cycle.",
+opts:["Wednesday","Tuesday","Thursday","Friday"],
+a:0
+},
+
+{
+q:"एक संख्या का 40% = 72 है। वह संख्या क्या है?",
+en:"40% of a number equals 72. Find the number.",
+opts:["180","160","200","144"],
+a:0
+},
+
+{
+q:"What is 15% of 240?",
+en:"Calculate the percentage directly.",
+opts:["36","30","40","32"],
+a:0
+},
+
+{
+q:"Complete: AZ, BY, CX, DW, ?",
+en:"Both letters move systematically through the alphabet.",
+opts:["EV","EU","FV","EX"],
+a:0
+},
+
+{
+q:"A, B, C, D sit in a row. A is left of B. C is right of B. D is left of A. Who is second from the left?",
+en:"Arrange all four people using the stated positions.",
+opts:["A","B","C","D"],
+a:0
+},
+
+{
+q:"यदि 5 + 3 = 28 और 4 + 2 = 18 किसी विशेष नियम के अनुसार हैं, तो 6 + 2 = ?",
+en:"Find a single arithmetic rule that fits both given examples.",
+opts:["38","32","40","36"],
+a:0
 }
 
+];
+
+function getLogicQuestion(level,index){
+  /*
+   Long-term system:
+   Higher levels use more questions and transform difficulty
+   through ordering, time pressure and question selection.
+  */
+  const seed=(level*17+index*31)%LOGIC_BANK.length;
+  return LOGIC_BANK[seed];
 }
 
+function initLogic(level){
+  const panel=document.getElementById("gamePanel");
 
-/* QUICK REACTION */
+  const total=Math.min(
+    12,
+    5+Math.floor(level/8)
+  );
 
-function reactionSetup(){
+  let qIndex=0;
+  let points=0;
+  let correct=0;
 
-$('rb').classList.remove('hide');
+  function showQuestion(){
+    if(qIndex>=total){
+      finishGame(points);
+      return;
+    }
 
-$('arena').innerHTML='';
+    const q=getLogicQuestion(level,qIndex);
 
-$('rstart').classList.remove('hide');
+    panel.innerHTML=
+      '<div class="logicBox">'+
+      '<div class="gameHeader">'+
+      '<strong>Logic Lab</strong>'+
+      '<span class="score">'+(qIndex+1)+' / '+total+'</span>'+
+      '</div>'+
+      '<div class="progress"><i style="width:'+((qIndex/total)*100)+'%"></i></div>'+
+      '<div class="question">'+
+      '<b>'+q.q+'</b>'+
+      '<div style="margin-top:10px;color:var(--muted);font-size:14px">'+q.en+'</div>'+
+      '</div>'+
+      '<div class="options" id="logicOptions"></div>'+
+      '</div>';
 
-react={
-run:false,
-duration:
-35+
-Math.min(
-35,
-Math.floor(level/100)
-),
-start:0,
-spawn:null
-};
+    const opts=document.getElementById("logicOptions");
 
+    q.opts.forEach((text,i)=>{
+      const b=document.createElement("button");
+      b.className="logicOption";
+      b.textContent=text;
+
+      b.onclick=()=>{
+        opts.querySelectorAll("button").forEach(x=>x.disabled=true);
+
+        if(i===q.a){
+          correct++;
+          points+=20+level;
+          setScore(points);
+        }else{
+          points=Math.max(0,points-5);
+          setScore(points);
+        }
+
+        const exp=document.createElement("div");
+        exp.className="explain";
+        exp.textContent=
+          i===q.a
+          ?"Correct reasoning. Continue to the next challenge."
+          :"Check the stated rule carefully and compare every option.";
+
+        opts.parentNode.appendChild(exp);
+
+        qIndex++;
+        setTimeout(showQuestion,650);
+      };
+
+      opts.appendChild(b);
+    });
+  }
+
+  showQuestion();
 }
 
-function reactionStart(){
+/* =========================================================
+   MIND CALM
+   ========================================================= */
 
-if(react.run)
-return;
+function initCalm(level){
+  const panel=document.getElementById("gamePanel");
 
-react.run=true;
+  const duration=Math.min(
+    180,
+    35+level*5
+  );
 
-$('rstart').classList.add('hide');
+  let remaining=duration;
+  let running=false;
 
-react.start=Date.now();
+  panel.innerHTML=
+    '<div class="calmBox">'+
+    '<div class="gameHeader">'+
+    '<strong>Mind Calm</strong>'+
+    '<span class="score"><span id="calmTime">'+remaining+'</span>s</span>'+
+    '</div>'+
+    '<div class="breathCircle" id="breathCircle">'+
+    '<span id="breathText">Ready</span>'+
+    '</div>'+
+    '<div class="calmText" id="calmMain">Slow down.</div>'+
+    '<div class="calmSub">Follow the circle. Breathe slowly. Keep your attention on the present moment.</div>'+
+    '<div class="calmButtons">'+
+    '<button class="primary" id="calmStart">Start Session</button>'+
+    '<button class="secondary" id="calmFinish">Finish</button>'+
+    '</div>'+
+    '</div>';
 
-function spawn(){
+  const circle=document.getElementById("breathCircle");
+  const text=document.getElementById("breathText");
+  const main=document.getElementById("calmMain");
+  const time=document.getElementById("calmTime");
 
-if(!react.run)
-return;
+  document.getElementById("calmStart").onclick=()=>{
+    if(running)return;
 
-let t=
-(Date.now()-react.start)/1000;
+    running=true;
+    circle.classList.add("animate");
 
-if(t>=react.duration){
+    let phase=0;
 
-react.run=false;
+    gameTimer=setInterval(()=>{
+      remaining--;
+      time.textContent=remaining;
 
-finish(
-'Reaction challenge complete. Try a higher level.'
-);
+      phase=(phase+1)%8;
 
-return;
+      if(phase<4){
+        text.textContent="Breathe in";
+        main.textContent="Breathe in slowly";
+      }else{
+        text.textContent="Breathe out";
+        main.textContent="Breathe out slowly";
+      }
 
+      if(remaining<=0){
+        finishGame(100+level*10);
+      }
+    },1000);
+  };
+
+  document.getElementById("calmFinish").onclick=()=>{
+    if(running){
+      const completed=duration-remaining;
+      finishGame(Math.max(20,completed*3));
+    }else{
+      finishGame(10);
+    }
+  };
+
+  gameCleanup=()=>{
+    circle.classList.remove("animate");
+  };
 }
 
-prog(
-t/react.duration*100
-);
+/* =========================================================
+   AD READY SYSTEM
+   =========================================================
 
-/*
-Numbers are traps.
-Bubbles are targets.
-As level rises:
-- speed increases
-- spawn rate increases
-- number traps become more common
+   IMPORTANT:
+   Do NOT put fake publisher IDs here.
+
+   After your Google AdSense approval, actual ad code/slot
+   information can be inserted into the marked ad locations.
+
+   Never encourage users to click ads.
+   Never give cash for ad views/clicks.
+   Rewarded ads, if used later, should only provide
+   legitimate non-cash in-game rewards.
 */
 
-let o=
-document.createElement('div');
+function showAdBreak(){
+  /*
+    Reserved for approved Google ad implementation.
 
-let isNum=
-Math.random()<
-Math.min(
-.5,
-.18+
-level*.00005
-);
+    Example future locations:
+    - natural break after a completed level
+    - optional rewarded-ad button for an in-game retry/bonus
 
-let type=
-Math.floor(
-Math.random()*4
-);
-
-o.className=
-'o '+(isNum?'n':'b');
-
-let size=
-Math.max(
-40,
-56-
-Math.min(14,level/800)
-);
-
-o.style.width=size+'px';
-
-o.style.height=size+'px';
-
-o.style.left=
-(3+Math.random()*82)+'%';
-
-/*
-Higher level = faster upward movement.
-The run also gets slightly faster over time.
-*/
-
-let speed=
-Math.max(
-1.7,
-6.5-
-Math.min(4.3,level*.0015)-
-t*.045
-);
-
-o.style.animationDuration=
-speed+'s';
-
-if(isNum){
-
-o.textContent=
-1+
-Math.floor(Math.random()*9);
-
-o.dataset.p='-1';
-
-}else{
-
-o.textContent=
-type===0
-?
-'●'
-:
-type===1
-?
-'★'
-:
-type===2
-?
-'◆'
-:
-'✦';
-
-o.dataset.p=
-type===1
-?
-'2'
-:
-type===3
-?
-'3'
-:
-'1';
-
-if(type===1)
-o.classList.add('star');
-
-if(type===2)
-o.classList.add('ring');
-
-if(type===3)
-o.classList.add('diamond');
-
+    No fake ad is loaded now.
+  */
 }
 
-o.onclick=e=>{
-
-e.stopPropagation();
-
-if(!react.run)
-return;
-
-let p=+o.dataset.p;
-
-setScore(
-score+p
-);
-
-let r=
-o.getBoundingClientRect();
-
-let ar=
-$('arena').getBoundingClientRect();
-
-let f=
-document.createElement('div');
-
-f.className='float';
-
-f.textContent=
-p>0
-?
-'+'+p
-:
-p;
-
-f.style.left=
-(r.left-ar.left)+'px';
-
-f.style.top=
-(r.top-ar.top)+'px';
-
-$('arena').appendChild(f);
-
-setTimeout(
-()=>f.remove(),
-600
-);
-
-o.remove();
-
-};
-
-$('arena').appendChild(o);
-
-setTimeout(
-()=>o.remove(),
-speed*1000+500
-);
-
-react.spawn=
-setTimeout(
-spawn,
-Math.max(
-210,
-820-
-Math.min(500,level*.04)-
-t*8
-)
-);
-
-}
-
-spawn();
-
-}
-
-
-/* MIND SHIFT */
-
-const rules=[
-
-['Tap the SAME symbol','same'],
-
-['Tap the DIFFERENT symbol','different'],
-
-['Tap the LARGER number','large'],
-
-['Tap the SMALLER number','small'],
-
-['Tap the ODD number','odd'],
-
-['Tap the EVEN number','even']
-
-];
-
-function shiftStart(){
-
-$('sb').classList.remove('hide');
-
-shift={
-i:0,
-total:
-8+
-Math.min(
-12,
-Math.floor(level/50)
-),
-correct:0
-};
-
-shiftNext();
-
-}
-
-function shiftNext(){
-
-if(
-shift.i>=shift.total
-){
-
-finish(
-'Mind Shift complete. You adapted to changing rules.'
-);
-
-return;
-
-}
-
-shift.i++;
-
-let r=
-rules[
-(shift.i+
-Math.floor(level/10))
-%
-rules.length
-];
-
-let v;
-
-if(r[1]==='same')
-v=['★','★','●','◆'];
-
-else if(r[1]==='different')
-v=['▲','▲','▲','■'];
-
-else if(r[1]==='odd')
-v=[2,5,8,7];
-
-else if(r[1]==='even')
-v=[3,6,9,4];
-
-else
-v=[
-2+level%7,
-8+level%5,
-4+level%6,
-5+level%4
-];
-
-$('rule').textContent=
-'Round '+
-shift.i+
-' / '+
-shift.total+
-' — '+
-r[0];
-
-$('sym').textContent=
-r[1]==='same'||
-r[1]==='different'
-?
-'?'
-:
-'123';
-
-let box=$('sopts');
-
-box.innerHTML='';
-
-v.forEach((x,i)=>{
-
-let b=
-document.createElement('button');
-
-b.className='sopt';
-
-b.textContent=x;
-
-b.onclick=()=>{
-
-let target;
-
-if(r[1]==='same')
-target=0;
-
-else if(r[1]==='different')
-target=3;
-
-else if(r[1]==='large')
-target=
-v.indexOf(
-Math.max(...v)
-);
-
-else if(r[1]==='small')
-target=
-v.indexOf(
-Math.min(...v)
-);
-
-else if(r[1]==='odd')
-target=
-v.findIndex(
-x=>x%2
-);
-
-else
-target=
-v.findIndex(
-x=>x%2===0
-);
-
-if(i===target){
-
-shift.correct++;
-
-setScore(
-score+
-10+
-Math.min(
-20,
-Math.floor(level/100)
-)
-);
-
-}else{
-
-setScore(
-score-3
-);
-
-}
-
-prog(
-shift.i/
-shift.total*
-100
-);
-
-setTimeout(
-shiftNext,
-180
-);
-
-};
-
-box.appendChild(b);
-
+/* =========================================================
+   PAGE SAFETY
+   ========================================================= */
+
+window.addEventListener("beforeunload",()=>{
+  stopGame();
 });
 
-}
-
-
-/* LOGIC LAB */
-
-function logicStart(){
-
-$('lb').classList.remove('hide');
-
-logic={
-i:0,
-total:15,
-used:new Set()
-};
-
-logicNext();
-
-}
-
-function logicNext(){
-
-if(
-logic.i>=logic.total
-){
-
-finish(
-'Logic Lab complete. Great reasoning session.'
-);
-
-return;
-
-}
-
-logic.i++;
-
-let x;
-
-do{
-
-x=makeQ(level);
-
-}while(
-logic.used.has(x.id)
-);
-
-logic.used.add(x.id);
-
-$('question').textContent=
-'Q'+
-logic.i+
-'. '+
-x.q;
-
-$('explain').textContent='';
-
-let box=$('opts');
-
-box.innerHTML='';
-
-box.dataset.done='';
-
-x.o.forEach((v,i)=>{
-
-let b=
-document.createElement('button');
-
-b.className='opt';
-
-b.textContent=v;
-
-b.onclick=()=>{
-
-if(box.dataset.done)
-return;
-
-box.dataset.done='1';
-
-let bs=
-box.querySelectorAll('button');
-
-if(i===x.a){
-
-b.classList.add('good');
-
-setScore(
-score+
-10+
-Math.min(
-40,
-level
-)
-);
-
-}else{
-
-b.classList.add('bad');
-
-bs[x.a].classList.add('good');
-
-setScore(
-score-3
-);
-
-}
-
-$('explain').textContent=x.e;
-
-setTimeout(
-logicNext,
-550
-);
-
-};
-
-box.appendChild(b);
-
+window.addEventListener("pagehide",()=>{
+  stopGame();
 });
 
-prog(
-(logic.i-1)/
-logic.total*
-100
-);
+/* First load */
+openLevelsForHomeFix();
 
+function openLevelsForHomeFix(){
+  /* Keeps home screen as the initial screen. */
+  show("home");
 }
-
-
-/* LOGIC QUESTION CREATOR */
-
-function mk(
-id,
-text,
-opts,
-answer,
-exp
-){
-
-let vals=
-shuffle([...opts]);
-
-let correct=
-opts[answer];
-
-return{
-
-id:
-id+
-'_'
-+
-Math.random()
-.toString(36)
-.slice(2),
-
-q:text,
-
-o:vals,
-
-a:
-vals.indexOf(correct),
-
-e:exp
-
-};
-
-}
-
-function makeQ(l){
-
-let t=
-Math.floor(
-Math.random()*14
-);
-
-
-/* SERIES */
-
-if(t===0){
-
-let s=
-2+
-l%40;
-
-let d=
-2+
-Math.floor(l/100);
-
-let a=
-s+
-d*4;
-
-return mk(
-'series',
-`Series / श्रेणी: ${s}, ${s+d}, ${s+2*d}, ${s+3*d}, ?`,
-[
-String(a),
-String(a+d),
-String(a-1),
-String(a+2*d)
-],
-0,
-`हर step में +${d} हो रहा है।`
-);
-
-}
-
-
-/* SQUARE SERIES */
-
-if(t===1){
-
-let n=
-5+
-l%25;
-
-let a=
-(n+3)*(n+3);
-
-return mk(
-'square',
-`Complete / पूरा करें: ${n*n}, ${(n+1)*(n+1)}, ${(n+2)*(n+2)}, ?`,
-[
-String(a),
-String(a+n),
-String((n+4)*(n+4)),
-String(a-2)
-],
-0,
-'ये consecutive square numbers हैं।'
-);
-
-}
-
-
-/* MULTIPLICATION */
-
-if(t===2){
-
-let a=
-5+
-l%30;
-
-let b=
-3+
-l%12;
-
-let r=
-a*b;
-
-return mk(
-'mul',
-`Calculate / गणना करें: ${a} × ${b} = ?`,
-[
-String(r),
-String(r+a),
-String(r-b),
-String(r+5)
-],
-0,
-`${a} × ${b} = ${r}.`
-);
-
-}
-
-
-/* REVERSE */
-
-if(t===3){
-
-let n=
-10+
-l%30;
-
-let r=
-2*n+6;
-
-return mk(
-'reverse',
-`A number is doubled and 6 is added to get ${r}. Original number? / किसी संख्या को 2 से गुणा करके 6 जोड़ने पर ${r} मिलता है। मूल संख्या?`,
-[
-String(n),
-String(n+3),
-String(n-3),
-String(2*n)
-],
-0,
-`(${r} − 6) ÷ 2 = ${n}.`
-);
-
-}
-
-
-/* DEDUCTION */
-
-if(t===4)
-
-return mk(
-'deduce',
-'All roses are flowers. Some flowers fade. Can we conclude all roses fade? / सभी गुलाब फूल हैं। कुछ फूल मुरझाते हैं। क्या सभी गुलाब मुरझाते हैं?',
-[
-'Yes / हाँ',
-'No, cannot be concluded / नहीं, निष्कर्ष नहीं निकाला जा सकता',
-'Only at night / केवल रात में',
-'Always / हमेशा'
-],
-1,
-'Given information does not prove that every rose fades.'
-);
-
-
-/* CLOCK */
-
-if(t===5){
-
-let n=
-2+
-l%9;
-
-return mk(
-'clock',
-`If it is ${n}:00 now, what time will it be after 3 hours? / अभी ${n}:00 बजे हैं, 3 घंटे बाद क्या समय होगा?`,
-[
-`${(n+3-1)%12+1}:00`,
-`${(n+2-1)%12+1}:00`,
-`${(n+4-1)%12+1}:00`,
-`${n}:00`
-],
-0,
-'Current hour में 3 जोड़ना है।'
-);
-
-}
-
-
-/* ANALOGY */
-
-if(t===6)
-
-return mk(
-'analogy',
-'Book : Reading :: Fork : ? / Book का संबंध Reading से है, Fork का संबंध किससे है?',
-[
-'Eating / खाना',
-'Writing / लिखना',
-'Running / दौड़ना',
-'Sleeping / सोना'
-],
-0,
-'Book reading के लिए और fork eating के लिए उपयोग होता है।'
-);
-
-
-/* COMPARISON */
-
-if(t===7){
-
-let a=
-8+
-l%20;
-
-let b=
-a+
-l%7+
-2;
-
-let A=a*2;
-
-let B=b+a;
-
-let ans=
-A>B
-?
-0
-:
-A<B
-?
-1
-:
-2;
-
-return mk(
-'compare',
-`Which is greater? / कौन बड़ा है: ${a} × 2 या ${b} + ${a}?`,
-[
-`${a} × 2`,
-`${b} + ${a}`,
-'Both equal / दोनों बराबर',
-'Cannot say / नहीं बता सकते'
-],
-ans,
-'दोनों expressions की values compare करनी हैं।'
-);
-
-}
-
-
-/* ALGEBRA */
-
-if(t===8){
-
-let n=
-7+
-l%20;
-
-let r=
-n*n-n;
-
-return mk(
-'advanced',
-`If x = ${n}, calculate x² − x / यदि x = ${n}, तो x² − x का मान?`,
-[
-String(r),
-String(r+n),
-String(n*n),
-String(r-2)
-],
-0,
-`${n}² − ${n} = ${r}.`
-);
-
-}
-
-
-/* ORDER */
-
-if(t===9)
-
-return mk(
-'order',
-'Ravi is taller than Aman. Aman is taller than Kabir. Who is shortest? / Ravi, Aman से लंबा है और Aman, Kabir से लंबा है। सबसे छोटा कौन है?',
-[
-'Ravi',
-'Aman',
-'Kabir',
-'Cannot know / पता नहीं'
-],
-2,
-'Order is Ravi > Aman > Kabir, इसलिए Kabir shortest है।'
-);
-
-
-/* ALTERNATING */
-
-if(t===10){
-
-let n=
-3+
-l%12;
-
-let r=
-2*n+1;
-
-return mk(
-'alt',
-`Complete / पूरा करें: ${n}, ${2*n}, ${2*n+1}, ${4*n+2}, ?`,
-[
-String(r),
-String(r+2),
-String(r-1),
-String(r+4)
-],
-0,
-'Pattern ×2 और +1 alternate करता है।'
-);
-
-}
-
-
-/* DIFFERENT NUMBER */
-
-if(t===11){
-
-let n=
-4+
-l%16;
-
-return mk(
-'different',
-'Which number is different? / कौन-सी संख्या अलग है?',
-[
-String(n*2),
-String(n*4),
-String(n*6),
-String(n*2+1)
-],
-3,
-'पहली तीन even हैं; आखिरी odd है।'
-);
-
-}
-
-
-/* MISSING */
-
-if(t===12){
-
-let a=
-4+
-l%20;
-
-let b=
-2+
-l%10;
-
-let r=
-a+b;
-
-return mk(
-'missing',
-`Find the missing number / missing number खोजें: ${a} + ? = ${r}`,
-[
-String(b),
-String(a),
-String(b+1),
-String(b-1)
-],
-0,
-`${r} − ${a} = ${b}.`
-);
-
-}
-
-
-/* SQUARE */
-
-let a=
-5+
-l%15;
-
-let r=
-a*a;
-
-return mk(
-'square2',
-`What is ${a}²? / ${a}² का मान क्या है?`,
-[
-String(r),
-String(r+a),
-String(r-2),
-String(a*2)
-],
-0,
-`${a} × ${a} = ${r}.`
-);
-
-}
-
-
-/* MIND CALM */
-
-function calmSetup(){
-
-$('cb').classList.remove('hide');
-
-$('cstart').classList.remove('hide');
-
-$('ct').textContent=
-'Get comfortable';
-
-$('cm').textContent=
-'Press Start when ready';
-
-calm={
-run:false,
-duration:
-60+
-Math.min(
-180,
-level*2
-)
-};
-
-prog(0);
-
-}
-
-function calmStart(){
-
-if(calm.run)
-return;
-
-calm.run=true;
-
-$('cstart').classList.add('hide');
-
-let start=Date.now();
-
-function tick(){
-
-if(!calm.run)
-return;
-
-let e=
-(Date.now()-start)/1000;
-
-if(e>=calm.duration){
-
-calm.run=false;
-
-setScore(
-Math.round(
-calm.duration/5
-)
-);
-
-$('ct').textContent=
-'✨ Session complete';
-
-$('cm').textContent=
-'Take one slow breath.';
-
-setTimeout(
-()=>finish(
-'Calm session complete. Pause and notice how you feel.'
-),
-500
-);
-
-return;
-
-}
-
-prog(
-e/calm.duration*100
-);
-
-let c=e%12;
-
-if(c<4){
-
-$('ct').textContent=
-'Breathe IN';
-
-$('cm').textContent=
-Math.ceil(4-c)+'s';
-
-}else if(c<6){
-
-$('ct').textContent=
-'Hold gently';
-
-$('cm').textContent=
-Math.ceil(6-c)+'s';
-
-}else{
-
-$('ct').textContent=
-'Breathe OUT';
-
-$('cm').textContent=
-Math.ceil(12-c)+'s';
-
-}
-
-}
-
-interval=
-setInterval(
-tick,
-200
-);
-
-tick();
-
-}
-
-
-/* STOP TIMERS WHEN PAGE CLOSES */
-
-window.addEventListener(
-'beforeunload',
-()=>{
-clearTimers();
-}
-);
-
-function clearTimers(){
-
-if(timer)
-clearTimeout(timer);
-
-if(interval)
-clearInterval(interval);
-
-timer=null;
-interval=null;
-
-}
-
-
-/* START */
-
-home();
-
 </script>
 
 </body>
